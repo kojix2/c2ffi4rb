@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
-# -*- ruby -*-
-Gem::Specification.new do |s|
-  s.name     = 'c2ffi-ruby'
-  s.version  = '0.1'
-  s.license  = 'LGPL-2'
-  s.summary  = 'Import C2FFI JSON to ruby/ffi'
-  s.authors  = ['Ryan Pavlik']
-  s.email    = 'rpavlik@gmail.com'
-  s.files    = ['lib/c2ffi.rb',
-                'lib/c2ffi/parser.rb']
-  s.homepage = 'https://github.com/rpav/c2ffi-ruby'
+require_relative 'lib/c2ffi/version'
+
+Gem::Specification.new do |spec|
+  spec.name     = 'c2ffi'
+  spec.version  = C2FFI::VERSION
+  spec.license  = 'LGPL-2'
+  spec.summary  = 'Import C2FFI JSON to ruby/ffi'
+  spec.homepage = 'https://github.com/rpav/c2ffi-ruby'
+  spec.authors  = ['Ryan Pavlik']
+  spec.email    = ['rpavlik@gmail.com']
+  spec.required_ruby_version = '>= 2.4'
+
+  spec.files    = Dir['*.{md,txt}', '{lib}/**/*']
+  spec.require_path = 'lib'
 end
