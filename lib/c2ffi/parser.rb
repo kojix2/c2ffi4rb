@@ -22,7 +22,7 @@ module C2FFI
       out.puts
       out.puts "module #{module_name}"
       out.puts '  extend FFI::Library'
- 
+
       case libs
       when String
         out.puts "  ffi_lib \"#{libs}\""
@@ -45,15 +45,62 @@ module C2FFI
     end
 
     private
+    
+    def parse_toplevel(form)
+      case form[:tag]
+      when 'typedef'
+        type = parse_type(form[:type])
+
+        # I don't think typedef works right with structs, so assign
+        if @struct_type[type]
+          name = add_struct(form[:name])
+          s = format('%s = %s', name, type)
+        else
+          s = format('typedef %s, :%s', type, form[:name])
+        end
+
+      when 'const'
+        type = parse_type(form[:type])
+        s = format(type == ':string' ? '%s = "%s"' : '%s = %s',
+                   form[:name].upcase, form[:value])
+      when 'extern'
+        s = format('attach_variable :%s, :%s, %s',
+                   form[:name], form[:name],
+                   parse_type(form[:type]))
+      when 'function'
+        s = []
+        s << format("attach_function '%s', [", form[:name])
+        form[:parameters].each do |f|
+          s << "  #{parse_type(f[:type])},"
+        end
+        s << format('], %s', parse_type(form['return-type'.intern]))
+        #                     emacs doesn't like :"foo" ---^
+
+      when 'struct', 'union'
+        name = add_struct(form[:name])
+        s = make_struct(form)
+      when 'enum'
+        name = add_enum(form[:name])
+        s = []
+        s << format('enum %s, [', name)
+        form[:fields].each do |f|
+          s << format('  :%s, %s,',
+                      f[:name], f[:value])
+        end
+        s << ']'
+      end
+
+      @toplevels << s if s
+    end
 
     def add_struct(name)
-      if name[0] == '_'
-        name = "C#{name}"
-      elsif name == ''
-        name = format('Anon_Type_%d', @anon_counter)
+      if name == ''
         @anon_counter += 1
+        name = 'Anon_Type_' + @anon_counter.to_s
         return name
       end
+
+      name = 'C' + name if name.start_with '_'
 
       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
       @struct_type[name] = true
@@ -62,8 +109,8 @@ module C2FFI
 
     def add_enum(name)
       if name == ''
-        name = format(':anon_type_%d', @anon_counter)
         @anon_counter += 1
+        name = ':anon_type_' + @anon_counter.to_s
         return name
       end
 
@@ -141,53 +188,6 @@ module C2FFI
       else
         form[:tag]
       end
-    end
-
-    def parse_toplevel(form)
-      case form[:tag]
-      when 'typedef'
-        type = parse_type(form[:type])
-
-        # I don't think typedef works right with structs, so assign
-        if @struct_type[type]
-          name = add_struct(form[:name])
-          s = format('%s = %s', name, type)
-        else
-          s = format('typedef %s, :%s', type, form[:name])
-        end
-
-      when 'const'
-        type = parse_type(form[:type])
-        s = format(type == ':string' ? '%s = "%s"' : '%s = %s',
-                   form[:name].upcase, form[:value])
-      when 'extern'
-        s = format('attach_variable :%s, :%s, %s',
-                   form[:name], form[:name],
-                   parse_type(form[:type]))
-      when 'function'
-        s = []
-        s << format("attach_function '%s', [", form[:name])
-        form[:parameters].each do |f|
-          s << "  #{parse_type(f[:type])},"
-        end
-        s << format('], %s', parse_type(form['return-type'.intern]))
-        #                     emacs doesn't like :"foo" ---^
-
-      when 'struct', 'union'
-        name = add_struct(form[:name])
-        s = make_struct(form)
-      when 'enum'
-        name = add_enum(form[:name])
-        s = []
-        s << format('enum %s, [', name)
-        form[:fields].each do |f|
-          s << format('  :%s, %s,',
-                      f[:name], f[:value])
-        end
-        s << ']'
-      end
-
-      @toplevels << s if s
     end
   end
 end
