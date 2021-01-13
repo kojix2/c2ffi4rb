@@ -2,16 +2,16 @@ require 'ffi'
 
 module Example
   extend FFI::Library
-  ffi_lib "ex1", "ex2"
+  ffi_lib 'ex1', 'ex2'
 
   BAR = 14
 
-  QUUX = "abc"
+  QUUX = 'abc'
 
   attach_variable :SomeExtern, :SomeExtern, :int
 
   attach_function 'blah', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_variable :foo, :foo, :string
@@ -41,7 +41,7 @@ module Example
   enum :anon_type_2, [
     :X, 0,
     :Y, 1,
-    :Z, 2,
+    :Z, 2
   ]
 
   class C_Some_Internal_Struct < FFI::Union
@@ -70,16 +70,16 @@ module Example
   enum :some_values, [
     :a_value, 0,
     :another_value, 1,
-    :yet_another_value, 2,
+    :yet_another_value, 2
   ]
 
-  attach_function 'do_something', [
-    :pointer,
-    :int,
-    :int,
+  attach_function 'do_something', %i[
+    pointer
+    int
+    int
   ], :void
 
-  QUUX = "abc"
+  QUUX = 'abc'
 
   FOO = 4
 end

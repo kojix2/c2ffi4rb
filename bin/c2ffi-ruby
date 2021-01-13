@@ -10,49 +10,49 @@ require 'json'
 require 'c2ffi'
 
 options = {}
-OptionParser.new { |opts|
-  opts.banner = "Usage: c2ffi-ruby -M <module> -l lib1[,lib2,...] [specfile [specfile..]]"
+OptionParser.new do |opts|
+  opts.banner = 'Usage: c2ffi-ruby -M <module> -l lib1[,lib2,...] [specfile [specfile..]]'
 
-  opts.on("-M", "--module NAME", "Ruby module name") { |o|
+  opts.on('-M', '--module NAME', 'Ruby module name') do |o|
     options[:module] = o
-  }
+  end
 
-  opts.on("-l", "--libs LIBS", "Libraries to link, comma-separated") { |o|
-    options[:libs] = o.split(",")
-  }
+  opts.on('-l', '--libs LIBS', 'Libraries to link, comma-separated') do |o|
+    options[:libs] = o.split(',')
+  end
 
-  opts.on("-o", "--output FILE", "Output file") { |o|
+  opts.on('-o', '--output FILE', 'Output file') do |o|
     options[:output] = o
-  }
+  end
 
-  opts.on("-h", "--help", "Show this message") {
+  opts.on('-h', '--help', 'Show this message') do
     puts opts
     exit
-  }
-}.parse!
+  end
+end.parse!
 
-if(!options[:module])
-  puts "Module name required! (use -M)"
+if !options[:module]
+  puts 'Module name required! (use -M)'
   exit 1
-elsif(!options[:libs])
-  puts "Libraries required! (use -l)"
+elsif !options[:libs]
+  puts 'Libraries required! (use -l)'
   exit 1
-elsif(ARGV.size < 1)
-  puts "Input files required!"
+elsif ARGV.size < 1
+  puts 'Input files required!'
   exit 1
 end
 
 spec = []
-ARGV.each { | file |
-  File.open(file) { | io |
+ARGV.each do |file|
+  File.open(file) do |io|
     spec += JSON.parse(io.read, Hash[:symbolize_names, true])
-  }
-}
+  end
+end
 
 if options[:output]
-  open(options[:output], "w") { |io|
+  open(options[:output], 'w') do |io|
     C2FFI::Parser.parse(options[:module], options[:libs], spec, io)
-  }
+  end
 else
   C2FFI::Parser.parse(options[:module], options[:libs], spec)
 end

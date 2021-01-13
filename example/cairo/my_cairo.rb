@@ -2,13 +2,11 @@ require 'ffi'
 
 module MY_CAIRO
   extend FFI::Library
-  ffi_lib "cairo"
+  ffi_lib 'cairo'
 
-  attach_function 'cairo_version', [
-  ], :int
+  attach_function 'cairo_version', [], :int
 
-  attach_function 'cairo_version_string', [
-  ], :string
+  attach_function 'cairo_version_string', [], :string
 
   typedef :int, :cairo_bool_t
 
@@ -92,7 +90,7 @@ module MY_CAIRO
     :CAIRO_STATUS_DEVICE_ERROR, 35,
     :CAIRO_STATUS_INVALID_MESH_CONSTRUCTION, 36,
     :CAIRO_STATUS_DEVICE_FINISHED, 37,
-    :CAIRO_STATUS_LAST_STATUS, 38,
+    :CAIRO_STATUS_LAST_STATUS, 38
   ]
 
   typedef :_cairo_status, :cairo_status_t
@@ -100,19 +98,19 @@ module MY_CAIRO
   enum :_cairo_content, [
     :CAIRO_CONTENT_COLOR, 4096,
     :CAIRO_CONTENT_ALPHA, 8192,
-    :CAIRO_CONTENT_COLOR_ALPHA, 12288,
+    :CAIRO_CONTENT_COLOR_ALPHA, 12_288
   ]
 
   typedef :_cairo_content, :cairo_content_t
 
   enum :_cairo_format, [
-    :CAIRO_FORMAT_INVALID, 4294967295,
+    :CAIRO_FORMAT_INVALID, 4_294_967_295,
     :CAIRO_FORMAT_ARGB32, 0,
     :CAIRO_FORMAT_RGB24, 1,
     :CAIRO_FORMAT_A8, 2,
     :CAIRO_FORMAT_A1, 3,
     :CAIRO_FORMAT_RGB16_565, 4,
-    :CAIRO_FORMAT_RGB30, 5,
+    :CAIRO_FORMAT_RGB30, 5
   ]
 
   typedef :_cairo_format, :cairo_format_t
@@ -132,56 +130,56 @@ module MY_CAIRO
   Cairo_Rectangle_Int_T = C_Cairo_Rectangle_Int
 
   attach_function 'cairo_create', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
-  attach_function 'cairo_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
   attach_function 'cairo_save', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_restore', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_push_group', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_push_group_with_content', [
-    :pointer,
-    :cairo_content_t,
+  attach_function 'cairo_push_group_with_content', %i[
+    pointer
+    cairo_content_t
   ], :void
 
   attach_function 'cairo_pop_group', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_pop_group_to_source', [
-    :pointer,
+    :pointer
   ], :void
 
   enum :_cairo_operator, [
@@ -213,46 +211,46 @@ module MY_CAIRO
     :CAIRO_OPERATOR_HSL_HUE, 25,
     :CAIRO_OPERATOR_HSL_SATURATION, 26,
     :CAIRO_OPERATOR_HSL_COLOR, 27,
-    :CAIRO_OPERATOR_HSL_LUMINOSITY, 28,
+    :CAIRO_OPERATOR_HSL_LUMINOSITY, 28
   ]
 
   typedef :_cairo_operator, :cairo_operator_t
 
-  attach_function 'cairo_set_operator', [
-    :pointer,
-    :cairo_operator_t,
+  attach_function 'cairo_set_operator', %i[
+    pointer
+    cairo_operator_t
   ], :void
 
-  attach_function 'cairo_set_source', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_source', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_set_source_rgb', [
-    :pointer,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_set_source_rgb', %i[
+    pointer
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_set_source_rgba', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_set_source_rgba', %i[
+    pointer
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_set_source_surface', [
-    :pointer,
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_set_source_surface', %i[
+    pointer
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_set_tolerance', [
-    :pointer,
-    :double,
+  attach_function 'cairo_set_tolerance', %i[
+    pointer
+    double
   ], :void
 
   enum :_cairo_antialias, [
@@ -262,313 +260,313 @@ module MY_CAIRO
     :CAIRO_ANTIALIAS_SUBPIXEL, 3,
     :CAIRO_ANTIALIAS_FAST, 4,
     :CAIRO_ANTIALIAS_GOOD, 5,
-    :CAIRO_ANTIALIAS_BEST, 6,
+    :CAIRO_ANTIALIAS_BEST, 6
   ]
 
   typedef :_cairo_antialias, :cairo_antialias_t
 
-  attach_function 'cairo_set_antialias', [
-    :pointer,
-    :cairo_antialias_t,
+  attach_function 'cairo_set_antialias', %i[
+    pointer
+    cairo_antialias_t
   ], :void
 
   enum :_cairo_fill_rule, [
     :CAIRO_FILL_RULE_WINDING, 0,
-    :CAIRO_FILL_RULE_EVEN_ODD, 1,
+    :CAIRO_FILL_RULE_EVEN_ODD, 1
   ]
 
   typedef :_cairo_fill_rule, :cairo_fill_rule_t
 
-  attach_function 'cairo_set_fill_rule', [
-    :pointer,
-    :cairo_fill_rule_t,
+  attach_function 'cairo_set_fill_rule', %i[
+    pointer
+    cairo_fill_rule_t
   ], :void
 
-  attach_function 'cairo_set_line_width', [
-    :pointer,
-    :double,
+  attach_function 'cairo_set_line_width', %i[
+    pointer
+    double
   ], :void
 
   enum :_cairo_line_cap, [
     :CAIRO_LINE_CAP_BUTT, 0,
     :CAIRO_LINE_CAP_ROUND, 1,
-    :CAIRO_LINE_CAP_SQUARE, 2,
+    :CAIRO_LINE_CAP_SQUARE, 2
   ]
 
   typedef :_cairo_line_cap, :cairo_line_cap_t
 
-  attach_function 'cairo_set_line_cap', [
-    :pointer,
-    :cairo_line_cap_t,
+  attach_function 'cairo_set_line_cap', %i[
+    pointer
+    cairo_line_cap_t
   ], :void
 
   enum :_cairo_line_join, [
     :CAIRO_LINE_JOIN_MITER, 0,
     :CAIRO_LINE_JOIN_ROUND, 1,
-    :CAIRO_LINE_JOIN_BEVEL, 2,
+    :CAIRO_LINE_JOIN_BEVEL, 2
   ]
 
   typedef :_cairo_line_join, :cairo_line_join_t
 
-  attach_function 'cairo_set_line_join', [
-    :pointer,
-    :cairo_line_join_t,
+  attach_function 'cairo_set_line_join', %i[
+    pointer
+    cairo_line_join_t
   ], :void
 
-  attach_function 'cairo_set_dash', [
-    :pointer,
-    :pointer,
-    :int,
-    :double,
+  attach_function 'cairo_set_dash', %i[
+    pointer
+    pointer
+    int
+    double
   ], :void
 
-  attach_function 'cairo_set_miter_limit', [
-    :pointer,
-    :double,
+  attach_function 'cairo_set_miter_limit', %i[
+    pointer
+    double
   ], :void
 
-  attach_function 'cairo_translate', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_translate', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_scale', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_scale', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_rotate', [
-    :pointer,
-    :double,
+  attach_function 'cairo_rotate', %i[
+    pointer
+    double
   ], :void
 
-  attach_function 'cairo_transform', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_transform', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_set_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_matrix', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_identity_matrix', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_user_to_device', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_user_to_device', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_user_to_device_distance', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_user_to_device_distance', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_device_to_user', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_device_to_user', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_device_to_user_distance', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_device_to_user_distance', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_new_path', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_move_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_move_to', %i[
+    pointer
+    double
+    double
   ], :void
 
   attach_function 'cairo_new_sub_path', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_line_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_line_to', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_curve_to', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_curve_to', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_arc', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_arc', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_arc_negative', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_arc_negative', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_rel_move_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_rel_move_to', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_rel_line_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_rel_line_to', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_rel_curve_to', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_rel_curve_to', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_rectangle', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_rectangle', %i[
+    pointer
+    double
+    double
+    double
+    double
   ], :void
 
   attach_function 'cairo_close_path', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_path_extents', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_path_extents', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_paint', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_paint_with_alpha', [
-    :pointer,
-    :double,
+  attach_function 'cairo_paint_with_alpha', %i[
+    pointer
+    double
   ], :void
 
-  attach_function 'cairo_mask', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_mask', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_mask_surface', [
-    :pointer,
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_mask_surface', %i[
+    pointer
+    pointer
+    double
+    double
   ], :void
 
   attach_function 'cairo_stroke', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_stroke_preserve', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_fill', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_fill_preserve', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_copy_page', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_show_page', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_in_stroke', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_in_stroke', %i[
+    pointer
+    double
+    double
   ], :cairo_bool_t
 
-  attach_function 'cairo_in_fill', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_in_fill', %i[
+    pointer
+    double
+    double
   ], :cairo_bool_t
 
-  attach_function 'cairo_in_clip', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_in_clip', %i[
+    pointer
+    double
+    double
   ], :cairo_bool_t
 
-  attach_function 'cairo_stroke_extents', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_stroke_extents', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_fill_extents', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_fill_extents', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_reset_clip', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_clip', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_clip_preserve', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_clip_extents', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_clip_extents', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :void
 
   class C_Cairo_Rectangle < FFI::Union
@@ -591,11 +589,11 @@ module MY_CAIRO
   Cairo_Rectangle_List_T = C_Cairo_Rectangle_List
 
   attach_function 'cairo_copy_clip_rectangle_list', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_rectangle_list_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   class C_Cairo_Scaled_Font < FFI::Union
@@ -618,11 +616,11 @@ module MY_CAIRO
   Cairo_Glyph_T = Anon_Type_0
 
   attach_function 'cairo_glyph_allocate', [
-    :int,
+    :int
   ], :pointer
 
   attach_function 'cairo_glyph_free', [
-    :pointer,
+    :pointer
   ], :void
 
   class Anon_Type_1 < FFI::Union
@@ -634,15 +632,15 @@ module MY_CAIRO
   Cairo_Text_Cluster_T = Anon_Type_1
 
   attach_function 'cairo_text_cluster_allocate', [
-    :int,
+    :int
   ], :pointer
 
   attach_function 'cairo_text_cluster_free', [
-    :pointer,
+    :pointer
   ], :void
 
   enum :_cairo_text_cluster_flags, [
-    :CAIRO_TEXT_CLUSTER_FLAG_BACKWARD, 1,
+    :CAIRO_TEXT_CLUSTER_FLAG_BACKWARD, 1
   ]
 
   typedef :_cairo_text_cluster_flags, :cairo_text_cluster_flags_t
@@ -673,14 +671,14 @@ module MY_CAIRO
   enum :_cairo_font_slant, [
     :CAIRO_FONT_SLANT_NORMAL, 0,
     :CAIRO_FONT_SLANT_ITALIC, 1,
-    :CAIRO_FONT_SLANT_OBLIQUE, 2,
+    :CAIRO_FONT_SLANT_OBLIQUE, 2
   ]
 
   typedef :_cairo_font_slant, :cairo_font_slant_t
 
   enum :_cairo_font_weight, [
     :CAIRO_FONT_WEIGHT_NORMAL, 0,
-    :CAIRO_FONT_WEIGHT_BOLD, 1,
+    :CAIRO_FONT_WEIGHT_BOLD, 1
   ]
 
   typedef :_cairo_font_weight, :cairo_font_weight_t
@@ -690,7 +688,7 @@ module MY_CAIRO
     :CAIRO_SUBPIXEL_ORDER_RGB, 1,
     :CAIRO_SUBPIXEL_ORDER_BGR, 2,
     :CAIRO_SUBPIXEL_ORDER_VRGB, 3,
-    :CAIRO_SUBPIXEL_ORDER_VBGR, 4,
+    :CAIRO_SUBPIXEL_ORDER_VBGR, 4
   ]
 
   typedef :_cairo_subpixel_order, :cairo_subpixel_order_t
@@ -700,7 +698,7 @@ module MY_CAIRO
     :CAIRO_HINT_STYLE_NONE, 1,
     :CAIRO_HINT_STYLE_SLIGHT, 2,
     :CAIRO_HINT_STYLE_MEDIUM, 3,
-    :CAIRO_HINT_STYLE_FULL, 4,
+    :CAIRO_HINT_STYLE_FULL, 4
   ]
 
   typedef :_cairo_hint_style, :cairo_hint_style_t
@@ -708,7 +706,7 @@ module MY_CAIRO
   enum :_cairo_hint_metrics, [
     :CAIRO_HINT_METRICS_DEFAULT, 0,
     :CAIRO_HINT_METRICS_OFF, 1,
-    :CAIRO_HINT_METRICS_ON, 2,
+    :CAIRO_HINT_METRICS_ON, 2
   ]
 
   typedef :_cairo_hint_metrics, :cairo_hint_metrics_t
@@ -718,186 +716,185 @@ module MY_CAIRO
 
   Cairo_Font_Options_T = C_Cairo_Font_Options
 
-  attach_function 'cairo_font_options_create', [
-  ], :pointer
+  attach_function 'cairo_font_options_create', [], :pointer
 
   attach_function 'cairo_font_options_copy', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_font_options_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_font_options_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_font_options_merge', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_font_options_merge', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_font_options_equal', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_font_options_equal', %i[
+    pointer
+    pointer
   ], :cairo_bool_t
 
   attach_function 'cairo_font_options_hash', [
-    :pointer,
+    :pointer
   ], :ulong
 
-  attach_function 'cairo_font_options_set_antialias', [
-    :pointer,
-    :cairo_antialias_t,
+  attach_function 'cairo_font_options_set_antialias', %i[
+    pointer
+    cairo_antialias_t
   ], :void
 
   attach_function 'cairo_font_options_get_antialias', [
-    :pointer,
+    :pointer
   ], :cairo_antialias_t
 
-  attach_function 'cairo_font_options_set_subpixel_order', [
-    :pointer,
-    :cairo_subpixel_order_t,
+  attach_function 'cairo_font_options_set_subpixel_order', %i[
+    pointer
+    cairo_subpixel_order_t
   ], :void
 
   attach_function 'cairo_font_options_get_subpixel_order', [
-    :pointer,
+    :pointer
   ], :cairo_subpixel_order_t
 
-  attach_function 'cairo_font_options_set_hint_style', [
-    :pointer,
-    :cairo_hint_style_t,
+  attach_function 'cairo_font_options_set_hint_style', %i[
+    pointer
+    cairo_hint_style_t
   ], :void
 
   attach_function 'cairo_font_options_get_hint_style', [
-    :pointer,
+    :pointer
   ], :cairo_hint_style_t
 
-  attach_function 'cairo_font_options_set_hint_metrics', [
-    :pointer,
-    :cairo_hint_metrics_t,
+  attach_function 'cairo_font_options_set_hint_metrics', %i[
+    pointer
+    cairo_hint_metrics_t
   ], :void
 
   attach_function 'cairo_font_options_get_hint_metrics', [
-    :pointer,
+    :pointer
   ], :cairo_hint_metrics_t
 
-  attach_function 'cairo_select_font_face', [
-    :pointer,
-    :string,
-    :cairo_font_slant_t,
-    :cairo_font_weight_t,
+  attach_function 'cairo_select_font_face', %i[
+    pointer
+    string
+    cairo_font_slant_t
+    cairo_font_weight_t
   ], :void
 
-  attach_function 'cairo_set_font_size', [
-    :pointer,
-    :double,
+  attach_function 'cairo_set_font_size', %i[
+    pointer
+    double
   ], :void
 
-  attach_function 'cairo_set_font_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_font_matrix', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_get_font_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_font_matrix', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_set_font_options', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_font_options', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_get_font_options', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_font_options', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_set_font_face', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_font_face', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_get_font_face', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_set_scaled_font', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_set_scaled_font', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_get_scaled_font', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_show_text', [
-    :pointer,
-    :string,
+  attach_function 'cairo_show_text', %i[
+    pointer
+    string
   ], :void
 
-  attach_function 'cairo_show_glyphs', [
-    :pointer,
-    :pointer,
-    :int,
+  attach_function 'cairo_show_glyphs', %i[
+    pointer
+    pointer
+    int
   ], :void
 
-  attach_function 'cairo_show_text_glyphs', [
-    :pointer,
-    :string,
-    :int,
-    :pointer,
-    :int,
-    :pointer,
-    :int,
-    :cairo_text_cluster_flags_t,
+  attach_function 'cairo_show_text_glyphs', %i[
+    pointer
+    string
+    int
+    pointer
+    int
+    pointer
+    int
+    cairo_text_cluster_flags_t
   ], :void
 
-  attach_function 'cairo_text_path', [
-    :pointer,
-    :string,
+  attach_function 'cairo_text_path', %i[
+    pointer
+    string
   ], :void
 
-  attach_function 'cairo_glyph_path', [
-    :pointer,
-    :pointer,
-    :int,
+  attach_function 'cairo_glyph_path', %i[
+    pointer
+    pointer
+    int
   ], :void
 
-  attach_function 'cairo_text_extents', [
-    :pointer,
-    :string,
-    :pointer,
+  attach_function 'cairo_text_extents', %i[
+    pointer
+    string
+    pointer
   ], :void
 
-  attach_function 'cairo_glyph_extents', [
-    :pointer,
-    :pointer,
-    :int,
-    :pointer,
+  attach_function 'cairo_glyph_extents', %i[
+    pointer
+    pointer
+    int
+    pointer
   ], :void
 
-  attach_function 'cairo_font_extents', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_font_extents', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_font_face_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_font_face_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_font_face_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
   attach_function 'cairo_font_face_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   enum :_cairo_font_type, [
@@ -905,141 +902,140 @@ module MY_CAIRO
     :CAIRO_FONT_TYPE_FT, 1,
     :CAIRO_FONT_TYPE_WIN32, 2,
     :CAIRO_FONT_TYPE_QUARTZ, 3,
-    :CAIRO_FONT_TYPE_USER, 4,
+    :CAIRO_FONT_TYPE_USER, 4
   ]
 
   typedef :_cairo_font_type, :cairo_font_type_t
 
   attach_function 'cairo_font_face_get_type', [
-    :pointer,
+    :pointer
   ], :cairo_font_type_t
 
-  attach_function 'cairo_font_face_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_font_face_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_font_face_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_font_face_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
-  attach_function 'cairo_scaled_font_create', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_create', %i[
+    pointer
+    pointer
+    pointer
+    pointer
   ], :pointer
 
   attach_function 'cairo_scaled_font_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_scaled_font_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_scaled_font_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
   attach_function 'cairo_scaled_font_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   attach_function 'cairo_scaled_font_get_type', [
-    :pointer,
+    :pointer
   ], :cairo_font_type_t
 
-  attach_function 'cairo_scaled_font_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_scaled_font_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_scaled_font_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
-  attach_function 'cairo_scaled_font_extents', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_extents', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_text_extents', [
-    :pointer,
-    :string,
-    :pointer,
+  attach_function 'cairo_scaled_font_text_extents', %i[
+    pointer
+    string
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_glyph_extents', [
-    :pointer,
-    :pointer,
-    :int,
-    :pointer,
+  attach_function 'cairo_scaled_font_glyph_extents', %i[
+    pointer
+    pointer
+    int
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_text_to_glyphs', [
-    :pointer,
-    :double,
-    :double,
-    :string,
-    :int,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_text_to_glyphs', %i[
+    pointer
+    double
+    double
+    string
+    int
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
   attach_function 'cairo_scaled_font_get_font_face', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_scaled_font_get_font_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_get_font_matrix', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_get_ctm', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_get_ctm', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_get_scale_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_get_scale_matrix', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_scaled_font_get_font_options', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_scaled_font_get_font_options', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_toy_font_face_create', [
-    :string,
-    :cairo_font_slant_t,
-    :cairo_font_weight_t,
+  attach_function 'cairo_toy_font_face_create', %i[
+    string
+    cairo_font_slant_t
+    cairo_font_weight_t
   ], :pointer
 
   attach_function 'cairo_toy_font_face_get_family', [
-    :pointer,
+    :pointer
   ], :string
 
   attach_function 'cairo_toy_font_face_get_slant', [
-    :pointer,
+    :pointer
   ], :cairo_font_slant_t
 
   attach_function 'cairo_toy_font_face_get_weight', [
-    :pointer,
+    :pointer
   ], :cairo_font_weight_t
 
-  attach_function 'cairo_user_font_face_create', [
-  ], :pointer
+  attach_function 'cairo_user_font_face_create', [], :pointer
 
   typedef :pointer, :cairo_user_scaled_font_init_func_t
 
@@ -1049,116 +1045,116 @@ module MY_CAIRO
 
   typedef :pointer, :cairo_user_scaled_font_unicode_to_glyph_func_t
 
-  attach_function 'cairo_user_font_face_set_init_func', [
-    :pointer,
-    :cairo_user_scaled_font_init_func_t,
+  attach_function 'cairo_user_font_face_set_init_func', %i[
+    pointer
+    cairo_user_scaled_font_init_func_t
   ], :void
 
-  attach_function 'cairo_user_font_face_set_render_glyph_func', [
-    :pointer,
-    :cairo_user_scaled_font_render_glyph_func_t,
+  attach_function 'cairo_user_font_face_set_render_glyph_func', %i[
+    pointer
+    cairo_user_scaled_font_render_glyph_func_t
   ], :void
 
-  attach_function 'cairo_user_font_face_set_text_to_glyphs_func', [
-    :pointer,
-    :cairo_user_scaled_font_text_to_glyphs_func_t,
+  attach_function 'cairo_user_font_face_set_text_to_glyphs_func', %i[
+    pointer
+    cairo_user_scaled_font_text_to_glyphs_func_t
   ], :void
 
-  attach_function 'cairo_user_font_face_set_unicode_to_glyph_func', [
-    :pointer,
-    :cairo_user_scaled_font_unicode_to_glyph_func_t,
+  attach_function 'cairo_user_font_face_set_unicode_to_glyph_func', %i[
+    pointer
+    cairo_user_scaled_font_unicode_to_glyph_func_t
   ], :void
 
   attach_function 'cairo_user_font_face_get_init_func', [
-    :pointer,
+    :pointer
   ], :cairo_user_scaled_font_init_func_t
 
   attach_function 'cairo_user_font_face_get_render_glyph_func', [
-    :pointer,
+    :pointer
   ], :cairo_user_scaled_font_render_glyph_func_t
 
   attach_function 'cairo_user_font_face_get_text_to_glyphs_func', [
-    :pointer,
+    :pointer
   ], :cairo_user_scaled_font_text_to_glyphs_func_t
 
   attach_function 'cairo_user_font_face_get_unicode_to_glyph_func', [
-    :pointer,
+    :pointer
   ], :cairo_user_scaled_font_unicode_to_glyph_func_t
 
   attach_function 'cairo_get_operator', [
-    :pointer,
+    :pointer
   ], :cairo_operator_t
 
   attach_function 'cairo_get_source', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_get_tolerance', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_get_antialias', [
-    :pointer,
+    :pointer
   ], :cairo_antialias_t
 
   attach_function 'cairo_has_current_point', [
-    :pointer,
+    :pointer
   ], :cairo_bool_t
 
-  attach_function 'cairo_get_current_point', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_current_point', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_get_fill_rule', [
-    :pointer,
+    :pointer
   ], :cairo_fill_rule_t
 
   attach_function 'cairo_get_line_width', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_get_line_cap', [
-    :pointer,
+    :pointer
   ], :cairo_line_cap_t
 
   attach_function 'cairo_get_line_join', [
-    :pointer,
+    :pointer
   ], :cairo_line_join_t
 
   attach_function 'cairo_get_miter_limit', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_get_dash_count', [
-    :pointer,
+    :pointer
   ], :int
 
-  attach_function 'cairo_get_dash', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_dash', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_get_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_get_matrix', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_get_target', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_get_group_target', [
-    :pointer,
+    :pointer
   ], :pointer
 
   enum :_cairo_path_data_type, [
     :CAIRO_PATH_MOVE_TO, 0,
     :CAIRO_PATH_LINE_TO, 1,
     :CAIRO_PATH_CURVE_TO, 2,
-    :CAIRO_PATH_CLOSE_PATH, 3,
+    :CAIRO_PATH_CLOSE_PATH, 3
   ]
 
   typedef :_cairo_path_data_type, :cairo_path_data_type_t
@@ -1196,32 +1192,32 @@ module MY_CAIRO
   Cairo_Path_T = Cairo_Path
 
   attach_function 'cairo_copy_path', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_copy_path_flat', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_append_path', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_append_path', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_path_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   attach_function 'cairo_status_to_string', [
-    :cairo_status_t,
+    :cairo_status_t
   ], :string
 
   attach_function 'cairo_device_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   enum :_cairo_device_type, [
@@ -1233,205 +1229,205 @@ module MY_CAIRO
     :CAIRO_DEVICE_TYPE_XML, 5,
     :CAIRO_DEVICE_TYPE_COGL, 6,
     :CAIRO_DEVICE_TYPE_WIN32, 7,
-    :CAIRO_DEVICE_TYPE_INVALID, 4294967295,
+    :CAIRO_DEVICE_TYPE_INVALID, 4_294_967_295
   ]
 
   typedef :_cairo_device_type, :cairo_device_type_t
 
   attach_function 'cairo_device_get_type', [
-    :pointer,
+    :pointer
   ], :cairo_device_type_t
 
   attach_function 'cairo_device_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   attach_function 'cairo_device_acquire', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   attach_function 'cairo_device_release', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_device_flush', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_device_finish', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_device_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_device_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
-  attach_function 'cairo_device_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_device_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_device_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_device_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_create_similar', [
-    :pointer,
-    :cairo_content_t,
-    :int,
-    :int,
+  attach_function 'cairo_surface_create_similar', %i[
+    pointer
+    cairo_content_t
+    int
+    int
   ], :pointer
 
-  attach_function 'cairo_surface_create_similar_image', [
-    :pointer,
-    :cairo_format_t,
-    :int,
-    :int,
+  attach_function 'cairo_surface_create_similar_image', %i[
+    pointer
+    cairo_format_t
+    int
+    int
   ], :pointer
 
-  attach_function 'cairo_surface_map_to_image', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_map_to_image', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_surface_unmap_image', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_unmap_image', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_surface_create_for_rectangle', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_surface_create_for_rectangle', %i[
+    pointer
+    double
+    double
+    double
+    double
   ], :pointer
 
   enum :anon_type_6, [
     :CAIRO_SURFACE_OBSERVER_NORMAL, 0,
-    :CAIRO_SURFACE_OBSERVER_RECORD_OPERATIONS, 1,
+    :CAIRO_SURFACE_OBSERVER_RECORD_OPERATIONS, 1
   ]
 
   typedef :anon_type_6, :cairo_surface_observer_mode_t
 
-  attach_function 'cairo_surface_create_observer', [
-    :pointer,
-    :cairo_surface_observer_mode_t,
+  attach_function 'cairo_surface_create_observer', %i[
+    pointer
+    cairo_surface_observer_mode_t
   ], :pointer
 
   typedef :pointer, :cairo_surface_observer_callback_t
 
-  attach_function 'cairo_surface_observer_add_paint_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_paint_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_mask_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_mask_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_fill_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_fill_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_stroke_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_stroke_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_glyphs_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_glyphs_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_flush_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_flush_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_add_finish_callback', [
-    :pointer,
-    :cairo_surface_observer_callback_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_add_finish_callback', %i[
+    pointer
+    cairo_surface_observer_callback_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_observer_print', [
-    :pointer,
-    :cairo_write_func_t,
-    :pointer,
+  attach_function 'cairo_surface_observer_print', %i[
+    pointer
+    cairo_write_func_t
+    pointer
   ], :cairo_status_t
 
   attach_function 'cairo_surface_observer_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
-  attach_function 'cairo_device_observer_print', [
-    :pointer,
-    :cairo_write_func_t,
-    :pointer,
+  attach_function 'cairo_device_observer_print', %i[
+    pointer
+    cairo_write_func_t
+    pointer
   ], :cairo_status_t
 
   attach_function 'cairo_device_observer_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_device_observer_paint_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_device_observer_mask_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_device_observer_fill_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_device_observer_stroke_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_device_observer_glyphs_elapsed', [
-    :pointer,
+    :pointer
   ], :double
 
   attach_function 'cairo_surface_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_surface_finish', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_surface_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_surface_get_device', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_surface_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
   attach_function 'cairo_surface_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
   enum :_cairo_surface_type, [
@@ -1459,184 +1455,184 @@ module MY_CAIRO
     :CAIRO_SURFACE_TYPE_XML, 21,
     :CAIRO_SURFACE_TYPE_SKIA, 22,
     :CAIRO_SURFACE_TYPE_SUBSURFACE, 23,
-    :CAIRO_SURFACE_TYPE_COGL, 24,
+    :CAIRO_SURFACE_TYPE_COGL, 24
   ]
 
   typedef :_cairo_surface_type, :cairo_surface_type_t
 
   attach_function 'cairo_surface_get_type', [
-    :pointer,
+    :pointer
   ], :cairo_surface_type_t
 
   attach_function 'cairo_surface_get_content', [
-    :pointer,
+    :pointer
   ], :cairo_content_t
 
-  attach_function 'cairo_surface_write_to_png', [
-    :pointer,
-    :string,
+  attach_function 'cairo_surface_write_to_png', %i[
+    pointer
+    string
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_write_to_png_stream', [
-    :pointer,
-    :cairo_write_func_t,
-    :pointer,
+  attach_function 'cairo_surface_write_to_png_stream', %i[
+    pointer
+    cairo_write_func_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_surface_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_surface_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_get_mime_data', [
-    :pointer,
-    :string,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_get_mime_data', %i[
+    pointer
+    string
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_surface_set_mime_data', [
-    :pointer,
-    :string,
-    :string,
-    :ulong,
-    :cairo_destroy_func_t,
-    :pointer,
+  attach_function 'cairo_surface_set_mime_data', %i[
+    pointer
+    string
+    string
+    ulong
+    cairo_destroy_func_t
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_surface_supports_mime_type', [
-    :pointer,
-    :string,
+  attach_function 'cairo_surface_supports_mime_type', %i[
+    pointer
+    string
   ], :cairo_bool_t
 
-  attach_function 'cairo_surface_get_font_options', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_get_font_options', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_surface_flush', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_surface_mark_dirty', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_surface_mark_dirty_rectangle', [
-    :pointer,
-    :int,
-    :int,
-    :int,
-    :int,
+  attach_function 'cairo_surface_mark_dirty_rectangle', %i[
+    pointer
+    int
+    int
+    int
+    int
   ], :void
 
-  attach_function 'cairo_surface_set_device_offset', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_surface_set_device_offset', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_surface_get_device_offset', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_get_device_offset', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_surface_set_fallback_resolution', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_surface_set_fallback_resolution', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_surface_get_fallback_resolution', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_surface_get_fallback_resolution', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_surface_copy_page', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_surface_show_page', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_surface_has_show_text_glyphs', [
-    :pointer,
+    :pointer
   ], :cairo_bool_t
 
-  attach_function 'cairo_image_surface_create', [
-    :cairo_format_t,
-    :int,
-    :int,
+  attach_function 'cairo_image_surface_create', %i[
+    cairo_format_t
+    int
+    int
   ], :pointer
 
-  attach_function 'cairo_format_stride_for_width', [
-    :cairo_format_t,
-    :int,
+  attach_function 'cairo_format_stride_for_width', %i[
+    cairo_format_t
+    int
   ], :int
 
-  attach_function 'cairo_image_surface_create_for_data', [
-    :string,
-    :cairo_format_t,
-    :int,
-    :int,
-    :int,
+  attach_function 'cairo_image_surface_create_for_data', %i[
+    string
+    cairo_format_t
+    int
+    int
+    int
   ], :pointer
 
   attach_function 'cairo_image_surface_get_data', [
-    :pointer,
+    :pointer
   ], :string
 
   attach_function 'cairo_image_surface_get_format', [
-    :pointer,
+    :pointer
   ], :cairo_format_t
 
   attach_function 'cairo_image_surface_get_width', [
-    :pointer,
+    :pointer
   ], :int
 
   attach_function 'cairo_image_surface_get_height', [
-    :pointer,
+    :pointer
   ], :int
 
   attach_function 'cairo_image_surface_get_stride', [
-    :pointer,
+    :pointer
   ], :int
 
   attach_function 'cairo_image_surface_create_from_png', [
-    :string,
+    :string
   ], :pointer
 
-  attach_function 'cairo_image_surface_create_from_png_stream', [
-    :cairo_read_func_t,
-    :pointer,
+  attach_function 'cairo_image_surface_create_from_png_stream', %i[
+    cairo_read_func_t
+    pointer
   ], :pointer
 
-  attach_function 'cairo_recording_surface_create', [
-    :cairo_content_t,
-    :pointer,
+  attach_function 'cairo_recording_surface_create', %i[
+    cairo_content_t
+    pointer
   ], :pointer
 
-  attach_function 'cairo_recording_surface_ink_extents', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_recording_surface_ink_extents', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_recording_surface_get_extents', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_recording_surface_get_extents', %i[
+    pointer
+    pointer
   ], :cairo_bool_t
 
   typedef :pointer, :cairo_raster_source_acquire_func_t
@@ -1649,123 +1645,122 @@ module MY_CAIRO
 
   typedef :pointer, :cairo_raster_source_finish_func_t
 
-  attach_function 'cairo_pattern_create_raster_source', [
-    :pointer,
-    :cairo_content_t,
-    :int,
-    :int,
+  attach_function 'cairo_pattern_create_raster_source', %i[
+    pointer
+    cairo_content_t
+    int
+    int
   ], :pointer
 
-  attach_function 'cairo_raster_source_pattern_set_callback_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_raster_source_pattern_set_callback_data', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_raster_source_pattern_get_callback_data', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_raster_source_pattern_set_acquire', [
-    :pointer,
-    :cairo_raster_source_acquire_func_t,
-    :cairo_raster_source_release_func_t,
+  attach_function 'cairo_raster_source_pattern_set_acquire', %i[
+    pointer
+    cairo_raster_source_acquire_func_t
+    cairo_raster_source_release_func_t
   ], :void
 
-  attach_function 'cairo_raster_source_pattern_get_acquire', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_raster_source_pattern_get_acquire', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_raster_source_pattern_set_snapshot', [
-    :pointer,
-    :cairo_raster_source_snapshot_func_t,
+  attach_function 'cairo_raster_source_pattern_set_snapshot', %i[
+    pointer
+    cairo_raster_source_snapshot_func_t
   ], :void
 
   attach_function 'cairo_raster_source_pattern_get_snapshot', [
-    :pointer,
+    :pointer
   ], :cairo_raster_source_snapshot_func_t
 
-  attach_function 'cairo_raster_source_pattern_set_copy', [
-    :pointer,
-    :cairo_raster_source_copy_func_t,
+  attach_function 'cairo_raster_source_pattern_set_copy', %i[
+    pointer
+    cairo_raster_source_copy_func_t
   ], :void
 
   attach_function 'cairo_raster_source_pattern_get_copy', [
-    :pointer,
+    :pointer
   ], :cairo_raster_source_copy_func_t
 
-  attach_function 'cairo_raster_source_pattern_set_finish', [
-    :pointer,
-    :cairo_raster_source_finish_func_t,
+  attach_function 'cairo_raster_source_pattern_set_finish', %i[
+    pointer
+    cairo_raster_source_finish_func_t
   ], :void
 
   attach_function 'cairo_raster_source_pattern_get_finish', [
-    :pointer,
+    :pointer
   ], :cairo_raster_source_finish_func_t
 
-  attach_function 'cairo_pattern_create_rgb', [
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_create_rgb', %i[
+    double
+    double
+    double
   ], :pointer
 
-  attach_function 'cairo_pattern_create_rgba', [
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_create_rgba', %i[
+    double
+    double
+    double
+    double
   ], :pointer
 
   attach_function 'cairo_pattern_create_for_surface', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_pattern_create_linear', [
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_create_linear', %i[
+    double
+    double
+    double
+    double
   ], :pointer
 
-  attach_function 'cairo_pattern_create_radial', [
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_create_radial', %i[
+    double
+    double
+    double
+    double
+    double
+    double
   ], :pointer
 
-  attach_function 'cairo_pattern_create_mesh', [
-  ], :pointer
+  attach_function 'cairo_pattern_create_mesh', [], :pointer
 
   attach_function 'cairo_pattern_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_pattern_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_pattern_get_reference_count', [
-    :pointer,
+    :pointer
   ], :uint
 
   attach_function 'cairo_pattern_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_user_data', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_user_data', %i[
+    pointer
+    pointer
   ], :pointer
 
-  attach_function 'cairo_pattern_set_user_data', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :cairo_destroy_func_t,
+  attach_function 'cairo_pattern_set_user_data', %i[
+    pointer
+    pointer
+    pointer
+    cairo_destroy_func_t
   ], :cairo_status_t
 
   enum :_cairo_pattern_type, [
@@ -1774,112 +1769,112 @@ module MY_CAIRO
     :CAIRO_PATTERN_TYPE_LINEAR, 2,
     :CAIRO_PATTERN_TYPE_RADIAL, 3,
     :CAIRO_PATTERN_TYPE_MESH, 4,
-    :CAIRO_PATTERN_TYPE_RASTER_SOURCE, 5,
+    :CAIRO_PATTERN_TYPE_RASTER_SOURCE, 5
   ]
 
   typedef :_cairo_pattern_type, :cairo_pattern_type_t
 
   attach_function 'cairo_pattern_get_type', [
-    :pointer,
+    :pointer
   ], :cairo_pattern_type_t
 
-  attach_function 'cairo_pattern_add_color_stop_rgb', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_add_color_stop_rgb', %i[
+    pointer
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_pattern_add_color_stop_rgba', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_pattern_add_color_stop_rgba', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
   ], :void
 
   attach_function 'cairo_mesh_pattern_begin_patch', [
-    :pointer,
+    :pointer
   ], :void
 
   attach_function 'cairo_mesh_pattern_end_patch', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_mesh_pattern_curve_to', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_curve_to', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_mesh_pattern_line_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_line_to', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_mesh_pattern_move_to', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_move_to', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_mesh_pattern_set_control_point', [
-    :pointer,
-    :uint,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_set_control_point', %i[
+    pointer
+    uint
+    double
+    double
   ], :void
 
-  attach_function 'cairo_mesh_pattern_set_corner_color_rgb', [
-    :pointer,
-    :uint,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_set_corner_color_rgb', %i[
+    pointer
+    uint
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_mesh_pattern_set_corner_color_rgba', [
-    :pointer,
-    :uint,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_mesh_pattern_set_corner_color_rgba', %i[
+    pointer
+    uint
+    double
+    double
+    double
+    double
   ], :void
 
-  attach_function 'cairo_pattern_set_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_set_matrix', %i[
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_pattern_get_matrix', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_matrix', %i[
+    pointer
+    pointer
   ], :void
 
   enum :_cairo_extend, [
     :CAIRO_EXTEND_NONE, 0,
     :CAIRO_EXTEND_REPEAT, 1,
     :CAIRO_EXTEND_REFLECT, 2,
-    :CAIRO_EXTEND_PAD, 3,
+    :CAIRO_EXTEND_PAD, 3
   ]
 
   typedef :_cairo_extend, :cairo_extend_t
 
-  attach_function 'cairo_pattern_set_extend', [
-    :pointer,
-    :cairo_extend_t,
+  attach_function 'cairo_pattern_set_extend', %i[
+    pointer
+    cairo_extend_t
   ], :void
 
   attach_function 'cairo_pattern_get_extend', [
-    :pointer,
+    :pointer
   ], :cairo_extend_t
 
   enum :_cairo_filter, [
@@ -1888,162 +1883,162 @@ module MY_CAIRO
     :CAIRO_FILTER_BEST, 2,
     :CAIRO_FILTER_NEAREST, 3,
     :CAIRO_FILTER_BILINEAR, 4,
-    :CAIRO_FILTER_GAUSSIAN, 5,
+    :CAIRO_FILTER_GAUSSIAN, 5
   ]
 
   typedef :_cairo_filter, :cairo_filter_t
 
-  attach_function 'cairo_pattern_set_filter', [
-    :pointer,
-    :cairo_filter_t,
+  attach_function 'cairo_pattern_set_filter', %i[
+    pointer
+    cairo_filter_t
   ], :void
 
   attach_function 'cairo_pattern_get_filter', [
-    :pointer,
+    :pointer
   ], :cairo_filter_t
 
-  attach_function 'cairo_pattern_get_rgba', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_rgba', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_surface', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_surface', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_color_stop_rgba', [
-    :pointer,
-    :int,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_color_stop_rgba', %i[
+    pointer
+    int
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_color_stop_count', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_color_stop_count', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_linear_points', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_linear_points', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_pattern_get_radial_circles', [
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_pattern_get_radial_circles', %i[
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_mesh_pattern_get_patch_count', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_mesh_pattern_get_patch_count', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_mesh_pattern_get_path', [
-    :pointer,
-    :uint,
+  attach_function 'cairo_mesh_pattern_get_path', %i[
+    pointer
+    uint
   ], :pointer
 
-  attach_function 'cairo_mesh_pattern_get_corner_color_rgba', [
-    :pointer,
-    :uint,
-    :uint,
-    :pointer,
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_mesh_pattern_get_corner_color_rgba', %i[
+    pointer
+    uint
+    uint
+    pointer
+    pointer
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_mesh_pattern_get_control_point', [
-    :pointer,
-    :uint,
-    :uint,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_mesh_pattern_get_control_point', %i[
+    pointer
+    uint
+    uint
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_matrix_init', [
-    :pointer,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
-    :double,
+  attach_function 'cairo_matrix_init', %i[
+    pointer
+    double
+    double
+    double
+    double
+    double
+    double
   ], :void
 
   attach_function 'cairo_matrix_init_identity', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_matrix_init_translate', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_matrix_init_translate', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_matrix_init_scale', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_matrix_init_scale', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_matrix_init_rotate', [
-    :pointer,
-    :double,
+  attach_function 'cairo_matrix_init_rotate', %i[
+    pointer
+    double
   ], :void
 
-  attach_function 'cairo_matrix_translate', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_matrix_translate', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_matrix_scale', [
-    :pointer,
-    :double,
-    :double,
+  attach_function 'cairo_matrix_scale', %i[
+    pointer
+    double
+    double
   ], :void
 
-  attach_function 'cairo_matrix_rotate', [
-    :pointer,
-    :double,
+  attach_function 'cairo_matrix_rotate', %i[
+    pointer
+    double
   ], :void
 
   attach_function 'cairo_matrix_invert', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_matrix_multiply', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_matrix_multiply', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_matrix_transform_distance', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_matrix_transform_distance', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
-  attach_function 'cairo_matrix_transform_point', [
-    :pointer,
-    :pointer,
-    :pointer,
+  attach_function 'cairo_matrix_transform_point', %i[
+    pointer
+    pointer
+    pointer
   ], :void
 
   class C_Cairo_Region < FFI::Union
@@ -2054,122 +2049,120 @@ module MY_CAIRO
   enum :_cairo_region_overlap, [
     :CAIRO_REGION_OVERLAP_IN, 0,
     :CAIRO_REGION_OVERLAP_OUT, 1,
-    :CAIRO_REGION_OVERLAP_PART, 2,
+    :CAIRO_REGION_OVERLAP_PART, 2
   ]
 
   typedef :_cairo_region_overlap, :cairo_region_overlap_t
 
-  attach_function 'cairo_region_create', [
-  ], :pointer
+  attach_function 'cairo_region_create', [], :pointer
 
   attach_function 'cairo_region_create_rectangle', [
-    :pointer,
+    :pointer
   ], :pointer
 
-  attach_function 'cairo_region_create_rectangles', [
-    :pointer,
-    :int,
+  attach_function 'cairo_region_create_rectangles', %i[
+    pointer
+    int
   ], :pointer
 
   attach_function 'cairo_region_copy', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_region_reference', [
-    :pointer,
+    :pointer
   ], :pointer
 
   attach_function 'cairo_region_destroy', [
-    :pointer,
+    :pointer
   ], :void
 
-  attach_function 'cairo_region_equal', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_equal', %i[
+    pointer
+    pointer
   ], :cairo_bool_t
 
   attach_function 'cairo_region_status', [
-    :pointer,
+    :pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_get_extents', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_get_extents', %i[
+    pointer
+    pointer
   ], :void
 
   attach_function 'cairo_region_num_rectangles', [
-    :pointer,
+    :pointer
   ], :int
 
-  attach_function 'cairo_region_get_rectangle', [
-    :pointer,
-    :int,
-    :pointer,
+  attach_function 'cairo_region_get_rectangle', %i[
+    pointer
+    int
+    pointer
   ], :void
 
   attach_function 'cairo_region_is_empty', [
-    :pointer,
+    :pointer
   ], :cairo_bool_t
 
-  attach_function 'cairo_region_contains_rectangle', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_contains_rectangle', %i[
+    pointer
+    pointer
   ], :cairo_region_overlap_t
 
-  attach_function 'cairo_region_contains_point', [
-    :pointer,
-    :int,
-    :int,
+  attach_function 'cairo_region_contains_point', %i[
+    pointer
+    int
+    int
   ], :cairo_bool_t
 
-  attach_function 'cairo_region_translate', [
-    :pointer,
-    :int,
-    :int,
+  attach_function 'cairo_region_translate', %i[
+    pointer
+    int
+    int
   ], :void
 
-  attach_function 'cairo_region_subtract', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_subtract', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_subtract_rectangle', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_subtract_rectangle', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_intersect', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_intersect', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_intersect_rectangle', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_intersect_rectangle', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_union', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_union', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_union_rectangle', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_union_rectangle', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_xor', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_xor', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_region_xor_rectangle', [
-    :pointer,
-    :pointer,
+  attach_function 'cairo_region_xor_rectangle', %i[
+    pointer
+    pointer
   ], :cairo_status_t
 
-  attach_function 'cairo_debug_reset_static_data', [
-  ], :void
+  attach_function 'cairo_debug_reset_static_data', [], :void
 
   CAIRO_HAS_SCRIPT_SURFACE = 1
 
@@ -2219,13 +2212,13 @@ module MY_CAIRO
 
   CAIRO_VERSION_MAJOR = 1
 
-  CAIRO_MIME_TYPE_PNG = "image/png"
+  CAIRO_MIME_TYPE_PNG = 'image/png'
 
-  CAIRO_MIME_TYPE_JP2 = "image/jp2"
+  CAIRO_MIME_TYPE_JP2 = 'image/jp2'
 
-  CAIRO_MIME_TYPE_JPEG = "image/jpeg"
+  CAIRO_MIME_TYPE_JPEG = 'image/jpeg'
 
-  CAIRO_MIME_TYPE_UNIQUE_ID = "application/x-cairo.uuid"
+  CAIRO_MIME_TYPE_UNIQUE_ID = 'application/x-cairo.uuid'
 
-  CAIRO_MIME_TYPE_URI = "text/x-uri"
+  CAIRO_MIME_TYPE_URI = 'text/x-uri'
 end
