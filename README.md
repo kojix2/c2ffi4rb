@@ -34,3 +34,7 @@ tool, or call C2FFI::Parser.parse directly.
 ```ruby
 C2FFI::Parser.parse(module_name, lib_or_libs, spec_array, io = $stdout)
 ```
+
+## Licence
+
+* [LGPL-2](https://github.com/rpav/c2ffi-ruby/blob/master/c2ffi-ruby.gemspec)
