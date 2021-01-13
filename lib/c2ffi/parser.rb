@@ -1,16 +1,8 @@
 # frozen_string_literal: true
 
 module C2FFI
-  TYPE_TABLE = {
-    ':unsigned-int' => ':uint',
-    ':unsigned-char' => ':uchar',
-    ':unsigned-long' => ':ulong',
-    ':function-pointer' => ':pointer'
-
-  }.freeze
-
   class Parser
-     private
+    private
 
      def add_struct(name)
        if name[0] == '_'
