@@ -2,6 +2,47 @@
 
 module C2FFI
   class Parser
+    def self.parse(module_name, libs, arr, out = $stdout)
+      parser = Parser.new
+      parser.parse(module_name, libs, arr, out)
+    end
+
+    def initialize
+      @type_table = TYPE_TABLE.dup
+      @struct_type = {}
+      @toplevels = []
+      @anon_counter = 0
+    end
+
+    def parse(module_name, libs, arr, out = $stdout)
+      arr.each do |form|
+        parse_toplevel(form)
+      end
+
+      out.print "require 'ffi'\n\n"
+      out.puts  "module #{module_name}"
+      out.puts  '  extend FFI::Library'
+      case libs
+      when String
+        out.puts "  ffi_lib \"#{libs}\""
+      else
+        out.printf "  ffi_lib %s\n", libs.map { |s| "\"#{s}\"" }.join(', ')
+      end
+
+      @toplevels.each do |t|
+        out.puts
+        case t
+        when String
+          out.printf("  %s\n", t)
+        when Array
+          t.each do |l|
+            out.printf("  %s\n", l)
+          end
+        end
+      end
+      out.puts 'end'
+    end
+
     private
 
     def add_struct(name)
@@ -146,49 +187,6 @@ module C2FFI
       end
 
       @toplevels << s if s
-    end
-
-    public
-
-    def initialize
-      @type_table = TYPE_TABLE.dup
-      @struct_type = {}
-      @toplevels = []
-      @anon_counter = 0
-    end
-
-    def parse(module_name, libs, arr, out = $stdout)
-      arr.each do |form|
-        parse_toplevel(form)
-      end
-
-      out.print "require 'ffi'\n\n"
-      out.puts  "module #{module_name}"
-      out.puts  '  extend FFI::Library'
-      case libs
-      when String
-        out.puts "  ffi_lib \"#{libs}\""
-      else
-        out.printf "  ffi_lib %s\n", libs.map { |s| "\"#{s}\"" }.join(', ')
-      end
-
-      @toplevels.each do |t|
-        out.puts
-        case t
-        when String
-          out.printf("  %s\n", t)
-        when Array
-          t.each do |l|
-            out.printf("  %s\n", l)
-          end
-        end
-      end
-      out.puts 'end'
-    end
-
-    def self.parse(module_name, libs, arr, out = $stdout)
-      parser = Parser.new
-      parser.parse(module_name, libs, arr, out)
     end
   end
 end
