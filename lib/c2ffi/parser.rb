@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module C2FFI
   TYPE_TABLE = {
     ':unsigned-int' => ':uint',
@@ -5,21 +7,21 @@ module C2FFI
     ':unsigned-long' => ':ulong',
     ':function-pointer' => ':pointer'
 
-  }
+  }.freeze
 
   class Parser
      private
 
      def add_struct(name)
        if name[0] == '_'
-         name = 'C' + name
+         name = "C#{name}"
        elsif name == ''
          name = format('Anon_Type_%d', @anon_counter)
          @anon_counter += 1
          return name
        end
 
-       name = name.capitalize.gsub!(/_([a-z])/) { |m| '_' + m[1].upcase }
+       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
        @struct_type[name] = true
        name
      end
@@ -32,7 +34,7 @@ module C2FFI
        end
 
        if name[0] != ':'
-         ':' + name
+         ":#{name}"
        else
          name
        end
@@ -50,7 +52,7 @@ module C2FFI
        s = []
        s << "class #{name} < #{type}"
 
-       if form[:fields].length > 0
+       if form[:fields].length.positive?
          s << '  layout \\'
          size = form[:fields].length
          sep = ','
@@ -74,7 +76,7 @@ module C2FFI
          if [':char', ':uchar'].include?(pointee)
            return ':string'
          elsif @struct_type[pointee]
-           return @struct_type[pointee] + '.ptr'
+           return "#{@struct_type[pointee]}.ptr"
          else
            return ':pointer'
          end
@@ -101,7 +103,7 @@ module C2FFI
 
        # All non-Classy types are :-prefixed?
        if form[:tag][0] != ':'
-         ':' + form[:tag]
+         ":#{form[:tag]}"
        else
          form[:tag]
        end
@@ -132,7 +134,7 @@ module C2FFI
          s = []
          s << format("attach_function '%s', [", form[:name])
          form[:parameters].each do |f|
-           s << '  ' + parse_type(f[:type]) + ','
+           s << "  #{parse_type(f[:type])},"
          end
          s << format('], %s', parse_type(form['return-type'.intern]))
          #                     emacs doesn't like :"foo" ---^

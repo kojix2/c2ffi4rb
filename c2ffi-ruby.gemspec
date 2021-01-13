@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 Gem::Specification.new do |s|
   s.name     = 'c2ffi-ruby'

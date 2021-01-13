@@ -1,4 +1,6 @@
 #!/usr/bin/ruby
+# frozen_string_literal: true
+
 ##
 ## This is meant to be more of an unsophisticated demo than a
 ## production tool.  Generating spec and ruby files should be part of
@@ -37,7 +39,7 @@ if !options[:module]
 elsif !options[:libs]
   puts 'Libraries required! (use -l)'
   exit 1
-elsif ARGV.size < 1
+elsif ARGV.empty?
   puts 'Input files required!'
   exit 1
 end
