@@ -3,8 +3,7 @@
 module C2FFI
   class Parser
     def self.parse(module_name, libs, arr, out = $stdout)
-      parser = Parser.new
-      parser.parse(module_name, libs, arr, out)
+      Parser.new.parse(module_name, libs, arr, out)
     end
 
     def initialize
@@ -19,24 +18,26 @@ module C2FFI
         parse_toplevel(form)
       end
 
-      out.print "require 'ffi'\n\n"
-      out.puts  "module #{module_name}"
-      out.puts  '  extend FFI::Library'
+      out.puts "require 'ffi'"
+      out.puts
+      out.puts "module #{module_name}"
+      out.puts '  extend FFI::Library'
+ 
       case libs
       when String
         out.puts "  ffi_lib \"#{libs}\""
-      else
-        out.printf "  ffi_lib %s\n", libs.map { |s| "\"#{s}\"" }.join(', ')
+      when Array
+        out.puts "  ffi_lib #{libs.join(', ')}"
       end
 
       @toplevels.each do |t|
         out.puts
         case t
         when String
-          out.printf("  %s\n", t)
+          out.puts "  #{t}"
         when Array
           t.each do |l|
-            out.printf("  %s\n", l)
+            out.puts "  #{l}"
           end
         end
       end
