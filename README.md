@@ -1,24 +1,22 @@
 # c2ffi-ruby
 
-This is a bridge between [c2ffi](https://github.com/rpav/c2ffi) and
-[ruby-ffi](https://github.com/ffi/ffi).  It reads the JSON output
-produced by `c2ffi` and produces very readable Ruby.  Example:
+[c2ffi](https://github.com/rpav/c2ffi) - FFI binding generator - for Ruby
 
 ## Usage
 
 First, produce a `spec` file using `c2ffi`:
 
-```console
-$ cd example/simple/
-$ c2ffi -M macros.h -o example.spec example.h
-$ c2ffi -o macros.spec macros.h
+```sh
+cd example/simple/
+c2ffi -M macros.h -o example.spec example.h
+c2ffi -o macros.spec macros.h
 ```
 
 Now you can generate a file manually with the included tool,
-`bin/c2ffi-ruby`, as follows:
+`exe/c2ffi-ruby`, as follows:
 
-```console
-$ c2ffi-ruby -M Example -l ex1,ex2 -o simple.rb *.spec
+```sh
+c2ffi-ruby -M Example -l ex1,ex2 -o simple.rb *.spec
 ```
 
 This produces the `simple.rb` file, as included.  Realistically, you
