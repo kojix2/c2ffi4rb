@@ -45,50 +45,54 @@ module C2FFI
     end
 
     private
-    
+
     def parse_toplevel(form)
-      case form[:tag]
-      when 'typedef'
-        type = parse_type(form[:type])
+      s = case form[:tag]
+          when 'typedef'
+            type = parse_type(form[:type])
 
-        # I don't think typedef works right with structs, so assign
-        if @struct_type[type]
-          name = add_struct(form[:name])
-          s = format('%s = %s', name, type)
-        else
-          s = format('typedef %s, :%s', type, form[:name])
-        end
+            # I don't think typedef works right with structs, so assign
+            if @struct_type[type]
+              name = add_struct(form[:name])
+              "#{name} = #{type}"
+            else
+              "typedef #{type}, :#{form[:name]}"
+            end
 
-      when 'const'
-        type = parse_type(form[:type])
-        s = format(type == ':string' ? '%s = "%s"' : '%s = %s',
-                   form[:name].upcase, form[:value])
-      when 'extern'
-        s = format('attach_variable :%s, :%s, %s',
-                   form[:name], form[:name],
-                   parse_type(form[:type]))
-      when 'function'
-        s = []
-        s << format("attach_function '%s', [", form[:name])
-        form[:parameters].each do |f|
-          s << "  #{parse_type(f[:type])},"
-        end
-        s << format('], %s', parse_type(form['return-type'.intern]))
-        #                     emacs doesn't like :"foo" ---^
+          when 'const'
+            type = parse_type(form[:type])
+            if type == ':string'
+              "#{form[:name].upcase} = \"#{form[:value]}\""
+            else
+              "#{form[:name].upcase} = #{form[:value]}"
+            end
 
-      when 'struct', 'union'
-        name = add_struct(form[:name])
-        s = make_struct(form)
-      when 'enum'
-        name = add_enum(form[:name])
-        s = []
-        s << format('enum %s, [', name)
-        form[:fields].each do |f|
-          s << format('  :%s, %s,',
-                      f[:name], f[:value])
-        end
-        s << ']'
-      end
+          when 'extern'
+            'attach_variable ' \
+                ":#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
+
+          when 'function'
+            s = []
+            s << "attach_function '#{form[:name]}', ["
+            form[:parameters].each do |f|
+              s << "  #{parse_type(f[:type])},"
+            end
+            s << "], #{parse_type(form['return-type'.intern])}"
+          #                     emacs doesn't like :"foo" ---^
+
+          when 'struct', 'union'
+            name = add_struct(form[:name])
+            make_struct(form)
+
+          when 'enum'
+            name = add_enum(form[:name])
+            s = []
+            s << "enum #{name}, ["
+            form[:fields].each do |f|
+              s << "  :#{f[:name]}, #{f[:value]},"
+            end
+            s << ']'
+          end
 
       @toplevels << s if s
     end
