@@ -78,7 +78,7 @@ module C2FFI
               s << "  #{parse_type(f[:type])},"
             end
             s << "], #{parse_type(form['return-type'.intern])}"
-          #                     emacs doesn't like :"foo" ---^
+            # emacs doesn't like :"foo" ---^
 
           when 'struct', 'union'
             name = add_struct(form[:name])
@@ -143,54 +143,53 @@ module C2FFI
         sep = ','
         form[:fields].each_with_index do |f, i|
           sep = '' if i >= (size - 1)
-          s << format('    :%s, %s%s', f[:name], parse_type(f[:type]), sep)
+          s << "    :#{f[:name]}, #{parse_type(f[:type])}#{sep}"
         end
       end
       s << 'end'
-
-      s
     end
 
     def parse_type(form)
       tt = @type_table[form[:tag]]
       return tt if tt
 
-      case (form[:tag])
+      case form[:tag]
       when ':pointer'
         pointee = parse_type(form[:type])
         if [':char', ':uchar'].include?(pointee)
-          return ':string'
+          ':string'
         elsif @struct_type[pointee]
-          return "#{@struct_type[pointee]}.ptr"
+          "#{@struct_type[pointee]}.ptr"
         else
-          return ':pointer'
+          ':pointer'
         end
 
       when ':array'
-        return format('[%s, %d]',
-                      parse_type(form[:type]),
-                      form[:size])
+        "[#{parse_type(form[:type])}, #{form[:size]}]"
 
       when ':struct', ':union'
-        return add_struct(form[:name])
+        add_struct(form[:name])
+
       when ':enum'
-        return add_enum(form[:name])
+        add_enum(form[:name])
 
       when 'enum'
         form[:name] = add_enum(form[:name])
         parse_toplevel(form)
-        return form[:name]
+        form[:name]
+
       when 'struct', 'union'
         form[:name] = add_struct(form[:name])
         parse_toplevel(form)
-        return form[:name]
-      end
+        form[:name]
 
-      # All non-Classy types are :-prefixed?
-      if form[:tag][0] != ':'
-        ":#{form[:tag]}"
       else
-        form[:tag]
+        # All non-Classy types are :-prefixed?
+        if form[:tag][0] != ':'
+          ":#{form[:tag]}"
+        else
+          form[:tag]
+        end
       end
     end
   end
