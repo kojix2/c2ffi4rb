@@ -1,4 +1,4 @@
-# c2ffi-ruby
+# c2ffi4rb
 
 [c2ffi](https://github.com/rpav/c2ffi) - FFI binding generator - for Ruby
 
