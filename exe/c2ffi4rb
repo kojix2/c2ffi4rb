@@ -26,7 +26,7 @@ end
 spec = []
 ARGV.each do |file|
   File.open(file) do |io|
-    spec << JSON.parse(io.read, Hash[:symbolize_names, true])
+    spec += JSON.parse(io.read, Hash[:symbolize_names, true])
   end
 end
 

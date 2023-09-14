@@ -97,7 +97,7 @@ module C2FFI
         return name
       end
 
-      name = 'C' + name if name.start_with '_'
+      name = 'C' + name if name.start_with? '_'
 
       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
       @struct_type[name] = true
