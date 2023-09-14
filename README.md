@@ -26,8 +26,8 @@ Now you can generate a file manually with the included tool,
 c2ffi4rb example.json macro.json > simple.rb
 ```
 
-This produces the `simple.rb` file, as included. 
+This produces the `simple.rb` file, as included.
 
 ## Licence
 
-* [LGPL-2](https://github.com/rpav/c2ffi-ruby/blob/master/c2ffi-ruby.gemspec)
+- [LGPL-2](https://github.com/rpav/c2ffi-ruby/blob/master/c2ffi-ruby.gemspec)
