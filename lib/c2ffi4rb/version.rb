@@ -1,3 +1,3 @@
-module C2FFI
+module C2FFI4RB
   VERSION = '0.0.0'
 end

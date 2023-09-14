@@ -6,7 +6,7 @@
 
 require 'optparse'
 require 'json'
-require 'c2ffi'
+require 'c2ffi4rb'
 
 options = {}
 
@@ -30,4 +30,4 @@ ARGV.each do |file|
   end
 end
 
-C2FFI::Parser.parse(spec)
+C2FFI4RB::Parser.parse(spec)

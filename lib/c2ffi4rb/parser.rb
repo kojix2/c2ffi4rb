@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module C2FFI
+module C2FFI4RB
   class Parser
     TYPE_TABLE = {
       "unsigned-int": :uint,

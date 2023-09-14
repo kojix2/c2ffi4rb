@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/c2ffi/version'
+require_relative 'lib/c2ffi4rb/version'
 
 Gem::Specification.new do |spec|
-  spec.name         = 'c2ffi'
-  spec.version      = C2FFI::VERSION
+  spec.name         = 'c2ffi4rb'
+  spec.version      = C2FFI4RB::VERSION
   spec.authors      = ['kojix2', 'Ryan Pavlik']
   spec.email        = ['2xijok@gmail.com', 'rpavlik@gmail.com']
 
