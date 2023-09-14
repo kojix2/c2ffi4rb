@@ -6,7 +6,7 @@
 
 [c2ffi](https://github.com/rpav/c2ffi) - FFI binding generator - for Ruby
 
-# installation
+## installation
 
 ```sh
 gem install c2ffi4rb
