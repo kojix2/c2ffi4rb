@@ -29,14 +29,13 @@ module C2FFI
         puts
         case t
         when String
-          puts "  #{t}"
+          puts "#{t}"
         when Array
           t.each do |l|
-            puts "  #{l}"
+            puts "#{l}"
           end
         end
       end
-      puts 'end'
     end
 
     private

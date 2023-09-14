@@ -7,7 +7,7 @@
 # installation
 
 ```sh
-gem install c2ffi
+gem install c2ffi4rb
 ```
 
 ## Usage
@@ -15,7 +15,6 @@ gem install c2ffi
 First, produce a `spec` file using `c2ffi`:
 
 ```sh
-cd example/simple/
 c2ffi -M macros.h -o example.json example.h
 c2ffi -o macros.json macros.h
 ```
@@ -24,7 +23,7 @@ Now you can generate a file manually with the included tool,
 `c2ffi-ruby`, as follows:
 
 ```sh
-c2ffi-ruby -M Example -l ex1,ex2 -o simple.rb *.json
+c2ffi4rb example.json macro.json > simple.rb
 ```
 
 This produces the `simple.rb` file, as included.  Realistically, you
