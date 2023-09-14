@@ -1,23 +1,17 @@
-#!/usr/bin/ruby
 # frozen_string_literal: true
 
-##
 ## This is meant to be more of an unsophisticated demo than a
 ## production tool.  Generating spec and ruby files should be part of
 ## your build system.  But this is how you can use it.
-##
 
 require 'optparse'
 require 'json'
 require 'c2ffi'
 
 options = {}
-OptionParser.new do |opts|
-  opts.banner = 'Usage: c2ffi-ruby -M <module> -l lib1[,lib2,...] [specfile [specfile..]]'
 
-  opts.on('-M', '--module NAME', 'Ruby module name') do |o|
-    options[:module] = o
-  end
+OptionParser.new do |opts|
+  opts.banner = 'Usage: c2ffi-ruby -l lib1[,lib2,...] [specfile [specfile..]]'
 
   opts.on('-l', '--libs LIBS', 'Libraries to link, comma-separated') do |o|
     options[:libs] = o.split(',')
@@ -33,10 +27,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-if !options[:module]
-  puts 'Module name required! (use -M)'
-  exit 1
-elsif !options[:libs]
+if !options[:libs]
   puts 'Libraries required! (use -l)'
   exit 1
 elsif ARGV.empty?
@@ -53,8 +44,8 @@ end
 
 if options[:output]
   open(options[:output], 'w') do |io|
-    C2FFI::Parser.parse(options[:module], options[:libs], spec, io)
+    C2FFI::Parser.parse(options[:libs], spec, io)
   end
 else
-  C2FFI::Parser.parse(options[:module], options[:libs], spec)
+  C2FFI::Parser.parse(options[:libs], spec)
 end

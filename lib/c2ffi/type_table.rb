@@ -2,9 +2,9 @@
 
 module C2FFI
   TYPE_TABLE = {
-    unsigned-int: :uint,
-    unsigned-char: :uchar,
-    unsigned-long: :ulong,
-    function-pointer: :pointer
+    :"unsigned-int" => :uint,
+    :"unsigned-char" => :uchar,
+    :"unsigned-long" => :ulong,
+    :"function-pointer" => :pointer
   }.freeze
 end

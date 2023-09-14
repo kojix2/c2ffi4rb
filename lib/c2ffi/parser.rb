@@ -2,8 +2,8 @@
 
 module C2FFI
   class Parser
-    def self.parse(module_name, libs, arr, out = $stdout)
-      Parser.new.parse(module_name, libs, arr, out)
+    def self.parse(libs, arr, out = $stdout)
+      Parser.new.parse(libs, arr, out)
     end
 
     def initialize
@@ -13,16 +13,11 @@ module C2FFI
       @anon_counter = 0
     end
 
-    def parse(module_name, libs, arr, out = $stdout)
+    def parse(libs, arr, out = $stdout)
       arr.each do |form|
         s = parse_toplevel(form)
         @toplevels << s if s
       end
-
-      out.puts "require 'ffi'"
-      out.puts
-      out.puts "module #{module_name}"
-      out.puts '  extend FFI::Library'
 
       case libs
       when String
