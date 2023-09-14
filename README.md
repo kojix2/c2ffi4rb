@@ -26,7 +26,7 @@ Now you can generate a file manually with the included tool,
 c2ffi4rb example.json macro.json > simple.rb
 ```
 
-This produces the `simple.rb` file, as included.  Realistically, you
+This produces the `simple.rb` file, as included. 
 
 ## Licence
 
