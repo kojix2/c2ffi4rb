@@ -27,12 +27,6 @@ c2ffi4rb example.json macro.json > simple.rb
 ```
 
 This produces the `simple.rb` file, as included.  Realistically, you
-should integrate this into your build process; you can either use this
-tool, or call C2FFI::Parser.parse directly.
-
-```ruby
-C2FFI::Parser.parse(module_name, lib_or_libs, spec_array, io = $stdout)
-```
 
 ## Licence
 
