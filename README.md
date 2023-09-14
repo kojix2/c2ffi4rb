@@ -2,8 +2,6 @@
 
 [c2ffi](https://github.com/rpav/c2ffi) - FFI binding generator - for Ruby
 
-:construction: Under development
-
 # installation
 
 ```sh
