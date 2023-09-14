@@ -2,42 +2,41 @@
 
 module C2FFI
   class Parser
-    def self.parse(libs, arr, out = $stdout)
-      Parser.new.parse(libs, arr, out)
+    TYPE_TABLE = {
+      "unsigned-int": :uint,
+      "unsigned-char": :uchar,
+      "unsigned-long": :ulong,
+      "function-pointer": :pointer
+    }.freeze
+
+    def self.parse(arr)
+      Parser.new.parse(arr)
     end
 
     def initialize
-      @type_table = TYPE_TABLE.dup
       @struct_type = {}
       @toplevels = []
       @anon_counter = 0
     end
 
-    def parse(libs, arr, out = $stdout)
+    def parse(arr)
       arr.each do |form|
         s = parse_toplevel(form)
         @toplevels << s if s
       end
 
-      case libs
-      when String
-        out.puts "  ffi_lib \"#{libs}\""
-      when Array
-        out.puts "  ffi_lib #{libs.join(', ')}"
-      end
-
       @toplevels.each do |t|
-        out.puts
+        puts
         case t
         when String
-          out.puts "  #{t}"
+          puts "  #{t}"
         when Array
           t.each do |l|
-            out.puts "  #{l}"
+            puts "  #{l}"
           end
         end
       end
-      out.puts 'end'
+      puts 'end'
     end
 
     private
@@ -144,7 +143,7 @@ module C2FFI
     end
 
     def parse_type(form)
-      tt = @type_table[form[:tag]]
+      tt = TYPE_TABLE[form[:tag]]
       return tt if tt
 
       case form[:tag]

@@ -12,25 +12,13 @@ options = {}
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: c2ffi-ruby -l lib1[,lib2,...] [specfile [specfile..]]'
-
-  opts.on('-l', '--libs LIBS', 'Libraries to link, comma-separated') do |o|
-    options[:libs] = o.split(',')
-  end
-
-  opts.on('-o', '--output FILE', 'Output file') do |o|
-    options[:output] = o
-  end
-
   opts.on('-h', '--help', 'Show this message') do
     puts opts
     exit
   end
 end.parse!
 
-if !options[:libs]
-  puts 'Libraries required! (use -l)'
-  exit 1
-elsif ARGV.empty?
+if ARGV.empty?
   puts 'Input files required!'
   exit 1
 end
@@ -38,14 +26,8 @@ end
 spec = []
 ARGV.each do |file|
   File.open(file) do |io|
-    spec += JSON.parse(io.read, Hash[:symbolize_names, true])
+    spec << JSON.parse(io.read, Hash[:symbolize_names, true])
   end
 end
 
-if options[:output]
-  open(options[:output], 'w') do |io|
-    C2FFI::Parser.parse(options[:libs], spec, io)
-  end
-else
-  C2FFI::Parser.parse(options[:libs], spec)
-end
+C2FFI::Parser.parse(spec)
