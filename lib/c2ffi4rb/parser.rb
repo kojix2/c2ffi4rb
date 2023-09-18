@@ -60,55 +60,60 @@ module C2FFI4RB
             ":#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
 
       when 'function'
-        s = []
-        s << "attach_function '#{form[:name]}', ["
+        l = []
+        l << "attach_function '#{form[:name]}', ["
         form[:parameters].each do |f|
-          s << "  #{parse_type(f[:type])},"
+          l << "  #{parse_type(f[:type])},"
         end
-        s << "], #{parse_type(form['return-type'.intern])}"
-      # emacs doesn't like :"foo" ---^
+        l << "], #{parse_type(form['return-type'.intern])}"
+        #          emacs doesn't like :"foo" ---^
+        l.join("\n")
 
       when 'struct', 'union'
-        name = add_struct(form[:name])
+        # name = add_struct(form[:name])
         make_struct(form)
 
       when 'enum'
         name = add_enum(form[:name])
-        s = []
-        s << "enum #{name}, ["
+        l = []
+        l << "enum #{name}, ["
         form[:fields].each do |f|
-          s << "  :#{f[:name]}, #{f[:value]},"
+          l << "  :#{f[:name]}, #{f[:value]},"
         end
-        s << ']'
+        l << ']'
+        l.join("\n")
       end
     end
 
     def add_struct(name)
+      # Anonymous structs are given a name
       if name == ''
         @anon_counter += 1
-        name = 'Anon_Type_' + @anon_counter.to_s
+        name = "Anon_Type_#{@anon_counter}"
         return name
       end
 
+      # Do not allow names that start with an underscore
       name = 'C' + name if name.start_with? '_'
 
+      # Convert snake_case to CamelCase
       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
+
       @struct_type[name] = true
       name
     end
 
     def add_enum(name)
+      # Anonymous enums are given a name
       if name == ''
         @anon_counter += 1
         name = ':anon_type_' + @anon_counter.to_s
         return name
       end
 
-      if name[0] != ':'
-        ":#{name}"
-      else
-        name
-      end
+      # All enums are prefixed with a colon
+      name = ":#{name}" unless name.start_with? ':'
+      name
     end
 
     def make_struct(form)
@@ -120,19 +125,19 @@ module C2FFI4RB
                'FFI::Union'
              end
 
-      s = []
-      s << "class #{name} < #{type}"
+      l = []
+      l << "class #{name} < #{type}"
 
       if form[:fields].length.positive?
-        s << '  layout \\'
+        l << '  layout \\'
         size = form[:fields].length
-        sep = ','
         form[:fields].each_with_index do |f, i|
-          sep = '' if i >= (size - 1)
-          s << "    :#{f[:name]}, #{parse_type(f[:type])}#{sep}"
+          sep = i >= (size - 1) ? '' : ','
+          l << "    :#{f[:name]}, #{parse_type(f[:type])}#{sep}"
         end
       end
-      s << 'end'
+      l << 'end'
+      l.join("\n")
     end
 
     def parse_type(form)
