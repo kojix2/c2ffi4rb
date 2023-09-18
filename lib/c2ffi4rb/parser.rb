@@ -7,7 +7,10 @@ module C2FFI4RB
     TYPE_TABLE = {
       ':unsigned-int' => ':uint',
       ':unsigned-char' => ':uchar',
+      ':unsinged-short' => ':ushort',
+      ':long-long' => ':long_long',
       ':unsigned-long' => ':ulong',
+      ':unsigned-long-long' => ':ulong_long',
       ':function-pointer' => ':pointer'
     }
 
