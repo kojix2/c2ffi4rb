@@ -3,11 +3,11 @@
 module C2FFI4RB
   class Parser
     TYPE_TABLE = {
-      "unsigned-int": :uint,
-      "unsigned-char": :uchar,
-      "unsigned-long": :ulong,
-      "function-pointer": :pointer
-    }.freeze
+      ':unsigned-int' => ':uint',
+      ':unsigned-char' => ':uchar',
+      ':unsigned-long' => ':ulong',
+      ':function-pointer' => ':pointer'
+    }
 
     def self.parse(arr)
       Parser.new.parse(arr)
