@@ -25,11 +25,7 @@ module C2FFI4RB
         @toplevels << s if s
       end
 
-      @toplevels.each do |t|
-        t.join("\n") if t.is_a? Array
-        puts
-        puts t
-      end
+      puts @toplevels.join("\n\n")
     end
 
     private
@@ -70,7 +66,7 @@ module C2FFI4RB
         l.join("\n")
 
       when 'struct', 'union'
-        # name = add_struct(form[:name])
+        name = add_struct(form[:name])
         make_struct(form)
 
       when 'enum'
