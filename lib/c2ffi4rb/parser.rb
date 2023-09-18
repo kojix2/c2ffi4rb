@@ -14,7 +14,7 @@ module C2FFI4RB
     end
 
     def initialize
-      @struct_type = {}
+      @struct_type = []
       @anon_counter = 0
     end
 
@@ -40,7 +40,7 @@ module C2FFI4RB
         type = parse_type(form[:type])
 
         # I don't think typedef works right with structs, so assign
-        if @struct_type[type]
+        if @struct_type.include?(type)
           name = add_struct(form[:name])
           "#{name} = #{type}"
         else
@@ -98,7 +98,7 @@ module C2FFI4RB
       # Convert snake_case to CamelCase
       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
 
-      @struct_type[name] = true
+      struct_type << name unless struct_type.include? name
       name
     end
 
@@ -148,8 +148,8 @@ module C2FFI4RB
         pointee = parse_type(form[:type])
         if [':char', ':uchar'].include?(pointee)
           ':string'
-        elsif @struct_type[pointee]
-          "#{@struct_type[pointee]}.ptr"
+        elsif @struct_type.include?(pointee)
+          "#{pointee}.ptr"
         else
           ':pointer'
         end
