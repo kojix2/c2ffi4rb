@@ -14,7 +14,7 @@ module C2FFI4RB
 
     private
 
-    def parse_toplevel: (untyped form) -> String?
+    def parse_toplevel: (untyped form) -> nil
 
     def add_struct: (untyped name) -> String?
 
