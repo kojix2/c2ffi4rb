@@ -26,15 +26,9 @@ module C2FFI4RB
       end
 
       @toplevels.each do |t|
+        t.join("\n") if t.is_a? Array
         puts
-        case t
-        when String
-          puts "#{t}"
-        when Array
-          t.each do |l|
-            puts "#{l}"
-          end
-        end
+        puts t
       end
     end
 
