@@ -6,7 +6,6 @@
 ## your build system.  But this is how you can use it.
 
 require 'optparse'
-require 'json'
 require 'c2ffi4rb'
 
 options = {}

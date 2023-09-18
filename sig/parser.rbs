@@ -2,7 +2,7 @@ module C2FFI4RB
   class Parser
     @struct_type: untyped
 
-    @anon_counter: untyped
+    @anon_counter: Integer
 
     TYPE_TABLE: Hash[String, String]
 
