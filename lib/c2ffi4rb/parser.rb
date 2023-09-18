@@ -15,17 +15,21 @@ module C2FFI4RB
 
     def initialize
       @struct_type = {}
-      @toplevels = []
       @anon_counter = 0
     end
 
     def parse(arr)
+      toplevels = []
       arr.each do |form|
         s = parse_toplevel(form)
-        @toplevels << s if s
+        if s.nil?
+          warn "Unknown form: #{form}"
+        else
+          toplevels << s if s
+        end
       end
 
-      puts @toplevels.join("\n\n")
+      puts toplevels.join("\n\n")
     end
 
     private
@@ -66,7 +70,6 @@ module C2FFI4RB
         l.join("\n")
 
       when 'struct', 'union'
-        name = add_struct(form[:name])
         make_struct(form)
 
       when 'enum'

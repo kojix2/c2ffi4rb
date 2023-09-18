@@ -2,8 +2,6 @@ module C2FFI4RB
   class Parser
     @struct_type: untyped
 
-    @toplevels: untyped
-
     @anon_counter: untyped
 
     TYPE_TABLE: Hash[String, String]
