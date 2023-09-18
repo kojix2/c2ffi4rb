@@ -25,7 +25,7 @@ module C2FFI4RB
         if s.nil?
           warn "Unknown form: #{form}"
         else
-          toplevels << s if s
+          toplevels << s
         end
       end
 
@@ -98,7 +98,7 @@ module C2FFI4RB
       # Convert snake_case to CamelCase
       name = name.capitalize.gsub!(/_([a-z])/) { |m| "_#{m[1].upcase}" }
 
-      struct_type << name unless struct_type.include? name
+      @struct_type << name unless @struct_type.include? name
       name
     end
 
