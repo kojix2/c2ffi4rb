@@ -135,9 +135,15 @@ module C2FFI4RB
       if form[:fields].length.positive?
         l << '  layout \\'
         size = form[:fields].length
+        anon_field_counter = 0
         form[:fields].each_with_index do |f, i|
           sep = i >= (size - 1) ? '' : ','
-          l << "    :#{f[:name]}, #{parse_type(f[:type])}#{sep}"
+          field_name = f[:name]
+          if field_name.empty?
+            field_name = "anon_field_#{anon_field_counter}"
+            anon_field_counter += 1
+          end
+          l << "    :#{field_name}, #{parse_type(f[:type])}#{sep}"
         end
       end
       l << 'end'
