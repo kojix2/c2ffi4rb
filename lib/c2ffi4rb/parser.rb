@@ -123,7 +123,7 @@ module C2FFI4RB
     def make_struct(form)
       name = add_struct(form[:name])
 
-      type = if form[:tag] == ':struct'
+      type = if form[:tag] == 'struct'
                'FFI::Struct'
              else
                'FFI::Union'
