@@ -18,7 +18,7 @@ First, produce a `spec` file using `c2ffi`.
 
 ```sh
 c2ffi -M macros.h -o example.json example.h
-c2ffi -o macros.json macros.h
+c2ffi -o macros.json example.h macros.h
 ```
 
 Next, use c2ffi4rb to generate ruby code.
