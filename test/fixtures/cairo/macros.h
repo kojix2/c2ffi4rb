@@ -1,116 +1,103 @@
-/* /usr/include/cairo/cairo-features.h:18:9 */
-#define CAIRO_HAS_SCRIPT_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:20:9 */
-#define CAIRO_HAS_TEE_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:19:9 */
-#define CAIRO_HAS_SVG_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:22:9 */
-#define CAIRO_HAS_XCB_SHM_FUNCTIONS 1
-
-/* /usr/include/cairo/cairo-features.h:21:9 */
-#define CAIRO_HAS_USER_FONT 1
-
-/* /usr/include/cairo/cairo-features.h:24:9 */
-#define CAIRO_HAS_XLIB_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:23:9 */
-#define CAIRO_HAS_XCB_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:11:9 */
-#define CAIRO_HAS_IMAGE_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:10:9 */
-#define CAIRO_HAS_GOBJECT_FUNCTIONS 1
-
-/* /usr/include/cairo/cairo-features.h:13:9 */
-#define CAIRO_HAS_OBSERVER_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:12:9 */
-#define CAIRO_HAS_MIME_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:14:9 */
-#define CAIRO_HAS_PDF_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:15:9 */
-#define CAIRO_HAS_PNG_FUNCTIONS 1
-
-/* /usr/include/cairo/cairo-features.h:17:9 */
-#define CAIRO_HAS_RECORDING_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:16:9 */
-#define CAIRO_HAS_PS_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:6:9 */
-#define CAIRO_HAS_FC_FONT 1
-
-/* /usr/include/cairo/cairo-features.h:9:9 */
-#define CAIRO_HAS_GL_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:7:9 */
-#define CAIRO_HAS_FT_FONT 1
-
-/* /usr/include/cairo/cairo-features.h:8:9 */
-#define CAIRO_HAS_GLX_FUNCTIONS 1
-
-/* /usr/include/cairo/cairo-features.h:25:9 */
-#define CAIRO_HAS_XLIB_XRENDER_SURFACE 1
-
-/* /usr/include/cairo/cairo-features.h:5:9 */
-#define CAIRO_HAS_EGL_FUNCTIONS 1
-
-/* /usr/include/cairo/cairo-version.h:6:9 */
-#define CAIRO_VERSION_MICRO 10
-
-/* /usr/include/cairo/cairo-version.h:5:9 */
-#define CAIRO_VERSION_MINOR 12
-
-/* /usr/include/cairo/cairo-version.h:4:9 */
-#define CAIRO_VERSION_MAJOR 1
-
-/* /usr/include/cairo/cairo.h:2418:9 */
-#define CAIRO_MIME_TYPE_PNG "image/png"
-
-/* /usr/include/cairo/cairo.h:2419:9 */
-#define CAIRO_MIME_TYPE_JP2 "image/jp2"
-
-/* /usr/include/cairo/cairo.h:2417:9 */
-#define CAIRO_MIME_TYPE_JPEG "image/jpeg"
-
-/* /usr/include/cairo/cairo.h:2421:9 */
-#define CAIRO_MIME_TYPE_UNIQUE_ID "application/x-cairo.uuid"
-
-/* /usr/include/cairo/cairo.h:2420:9 */
-#define CAIRO_MIME_TYPE_URI "text/x-uri"
-
-const __int128_t __c2ffi_CAIRO_HAS_SCRIPT_SURFACE = CAIRO_HAS_SCRIPT_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_TEE_SURFACE = CAIRO_HAS_TEE_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_SVG_SURFACE = CAIRO_HAS_SVG_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_XCB_SHM_FUNCTIONS = CAIRO_HAS_XCB_SHM_FUNCTIONS;
-const __int128_t __c2ffi_CAIRO_HAS_USER_FONT = CAIRO_HAS_USER_FONT;
-const __int128_t __c2ffi_CAIRO_HAS_XLIB_SURFACE = CAIRO_HAS_XLIB_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_XCB_SURFACE = CAIRO_HAS_XCB_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_IMAGE_SURFACE = CAIRO_HAS_IMAGE_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_GOBJECT_FUNCTIONS = CAIRO_HAS_GOBJECT_FUNCTIONS;
-const __int128_t __c2ffi_CAIRO_HAS_OBSERVER_SURFACE = CAIRO_HAS_OBSERVER_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_MIME_SURFACE = CAIRO_HAS_MIME_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_PDF_SURFACE = CAIRO_HAS_PDF_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_PNG_FUNCTIONS = CAIRO_HAS_PNG_FUNCTIONS;
-const __int128_t __c2ffi_CAIRO_HAS_RECORDING_SURFACE = CAIRO_HAS_RECORDING_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_PS_SURFACE = CAIRO_HAS_PS_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_FC_FONT = CAIRO_HAS_FC_FONT;
-const __int128_t __c2ffi_CAIRO_HAS_GL_SURFACE = CAIRO_HAS_GL_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_FT_FONT = CAIRO_HAS_FT_FONT;
-const __int128_t __c2ffi_CAIRO_HAS_GLX_FUNCTIONS = CAIRO_HAS_GLX_FUNCTIONS;
-const __int128_t __c2ffi_CAIRO_HAS_XLIB_XRENDER_SURFACE = CAIRO_HAS_XLIB_XRENDER_SURFACE;
-const __int128_t __c2ffi_CAIRO_HAS_EGL_FUNCTIONS = CAIRO_HAS_EGL_FUNCTIONS;
-const __int128_t __c2ffi_CAIRO_VERSION_MICRO = CAIRO_VERSION_MICRO;
-const __int128_t __c2ffi_CAIRO_VERSION_MINOR = CAIRO_VERSION_MINOR;
-const __int128_t __c2ffi_CAIRO_VERSION_MAJOR = CAIRO_VERSION_MAJOR;
-const char* __c2ffi_CAIRO_MIME_TYPE_PNG = CAIRO_MIME_TYPE_PNG;
-const char* __c2ffi_CAIRO_MIME_TYPE_JP2 = CAIRO_MIME_TYPE_JP2;
-const char* __c2ffi_CAIRO_MIME_TYPE_JPEG = CAIRO_MIME_TYPE_JPEG;
+const long __c2ffi_cairo_copy = cairo_copy;
+const long __c2ffi_cairo_show_surface = cairo_show_surface;
+const long __c2ffi_cairo_set_alpha = cairo_set_alpha;
+const long __c2ffi_cairo_surface_get_matrix = cairo_surface_get_matrix;
+const long __c2ffi_cairo_surface_set_matrix = cairo_surface_set_matrix;
+const long __c2ffi_cairo_surface_set_repeat = cairo_surface_set_repeat;
+const long __c2ffi_cairo_atsui_font_face_create_for_atsu_font_id = cairo_atsui_font_face_create_for_atsu_font_id;
+const long __c2ffi_cairo_svg_surface_set_dpi = cairo_svg_surface_set_dpi;
+const long __c2ffi_cairo_get_path_flat = cairo_get_path_flat;
+const long __c2ffi_cairo_get_path = cairo_get_path;
+const long __c2ffi_cairo_current_path_flat = cairo_current_path_flat;
+const long __c2ffi_cairo_current_path = cairo_current_path;
+const long __c2ffi_cairo_surface_get_filter = cairo_surface_get_filter;
+const long __c2ffi_cairo_surface_set_filter = cairo_surface_set_filter;
+const long __c2ffi_cairo_current_operator = cairo_current_operator;
+const long __c2ffi_cairo_transform_point = cairo_transform_point;
+const long __c2ffi_CAIRO_VERSION_STRING = CAIRO_VERSION_STRING;
+const long __c2ffi_cairo_transform_distance = cairo_transform_distance;
+const long __c2ffi_cairo_transform_font = cairo_transform_font;
+const long __c2ffi_CAIRO_VERSION = CAIRO_VERSION;
+const long __c2ffi_cairo_scale_font = cairo_scale_font;
+const long __c2ffi_cairo_select_font = cairo_select_font;
+const long __c2ffi_cairo_get_status = cairo_get_status;
+const long __c2ffi_cairo_concat_matrix = cairo_concat_matrix;
+const long __c2ffi_cairo_default_matrix = cairo_default_matrix;
+const long __c2ffi_cairo_status_string = cairo_status_string;
+const long __c2ffi_cairo_matrix_set_affine = cairo_matrix_set_affine;
+const long __c2ffi_cairo_init_clip = cairo_init_clip;
+const long __c2ffi_cairo_set_target_drawable = cairo_set_target_drawable;
+const long __c2ffi_cairo_surface_create_for_image = cairo_surface_create_for_image;
+const long __c2ffi_cairo_get_status_string = cairo_get_status_string;
+const long __c2ffi_cairo_inverse_transform_distance = cairo_inverse_transform_distance;
+const long __c2ffi_cairo_set_target_xcb = cairo_set_target_xcb;
+const long __c2ffi_cairo_set_target_quartz = cairo_set_target_quartz;
+const long __c2ffi_cairo_inverse_transform_point = cairo_inverse_transform_point;
+const long __c2ffi_cairo_set_target_win32 = cairo_set_target_win32;
+const long __c2ffi_cairo_xcb_surface_create_for_pixmap_with_visual = cairo_xcb_surface_create_for_pixmap_with_visual;
+const long __c2ffi_cairo_xlib_surface_create_for_window_with_visual = cairo_xlib_surface_create_for_window_with_visual;
+const long __c2ffi_cairo_pattern_add_color_stop = cairo_pattern_add_color_stop;
+const long __c2ffi_cairo_pdf_surface_set_dpi = cairo_pdf_surface_set_dpi;
+const long __c2ffi_cairo_xcb_surface_create_for_window_with_visual = cairo_xcb_surface_create_for_window_with_visual;
+const long __c2ffi_cairo_ps_surface_set_dpi = cairo_ps_surface_set_dpi;
+const long __c2ffi_cairo_matrix_set_identity = cairo_matrix_set_identity;
+const long __c2ffi_cairo_xlib_surface_create_for_pixmap_with_visual = cairo_xlib_surface_create_for_pixmap_with_visual;
+const long __c2ffi_cairo_set_rgb_color = cairo_set_rgb_color;
+const long __c2ffi_cairo_set_pattern = cairo_set_pattern;
+const char* __c2ffi_CAIRO_MIME_TYPE_EPS_PARAMS = CAIRO_MIME_TYPE_EPS_PARAMS;
+const char* __c2ffi_CAIRO_MIME_TYPE_EPS = CAIRO_MIME_TYPE_EPS;
+const char* __c2ffi_CAIRO_MIME_TYPE_CCITT_FAX_PARAMS = CAIRO_MIME_TYPE_CCITT_FAX_PARAMS;
+const char* __c2ffi_CAIRO_MIME_TYPE_CCITT_FAX = CAIRO_MIME_TYPE_CCITT_FAX;
+const char* __c2ffi_CAIRO_MIME_TYPE_JBIG2_GLOBAL_ID = CAIRO_MIME_TYPE_JBIG2_GLOBAL_ID;
+const char* __c2ffi_CAIRO_MIME_TYPE_JBIG2_GLOBAL = CAIRO_MIME_TYPE_JBIG2_GLOBAL;
+const char* __c2ffi_CAIRO_MIME_TYPE_JBIG2 = CAIRO_MIME_TYPE_JBIG2;
 const char* __c2ffi_CAIRO_MIME_TYPE_UNIQUE_ID = CAIRO_MIME_TYPE_UNIQUE_ID;
 const char* __c2ffi_CAIRO_MIME_TYPE_URI = CAIRO_MIME_TYPE_URI;
+const long __c2ffi_cairo_current_point = cairo_current_point;
+const long __c2ffi_cairo_set_target_png = cairo_set_target_png;
+const long __c2ffi_cairo_current_tolerance = cairo_current_tolerance;
+const long __c2ffi_cairo_set_target_pdf = cairo_set_target_pdf;
+const long __c2ffi_cairo_current_fill_rule = cairo_current_fill_rule;
+const long __c2ffi_cairo_set_target_ps = cairo_set_target_ps;
+const long __c2ffi_cairo_set_target_surface = cairo_set_target_surface;
+const long __c2ffi_cairo_matrix_get_affine = cairo_matrix_get_affine;
+const long __c2ffi_cairo_set_target_image = cairo_set_target_image;
+const long __c2ffi_cairo_current_matrix = cairo_current_matrix;
+const long __c2ffi_cairo_matrix_destroy = cairo_matrix_destroy;
+const long __c2ffi_cairo_matrix_create = cairo_matrix_create;
+const long __c2ffi_cairo_current_miter_limit = cairo_current_miter_limit;
+const long __c2ffi_cairo_matrix_copy = cairo_matrix_copy;
+const long __c2ffi_cairo_current_target_surface = cairo_current_target_surface;
+const long __c2ffi_cairo_current_line_cap = cairo_current_line_cap;
+const long __c2ffi_cairo_current_line_width = cairo_current_line_width;
+const long __c2ffi_cairo_current_line_join = cairo_current_line_join;
+const long __c2ffi_CAIRO_FONT_TYPE_ATSUI = CAIRO_FONT_TYPE_ATSUI;
+const long __c2ffi_CAIRO_HAS_XML_SURFACE = CAIRO_HAS_XML_SURFACE;
+const long __c2ffi_cairo_get_font_extents = cairo_get_font_extents;
+const long __c2ffi_cairo_current_font_extents = cairo_current_font_extents;
+const long __c2ffi_CAIRO_HAS_TEE_SURFACE = CAIRO_HAS_TEE_SURFACE;
+const long __c2ffi_CAIRO_HAS_USER_FONT = CAIRO_HAS_USER_FONT;
+const long __c2ffi_CAIRO_HAS_SVG_SURFACE = CAIRO_HAS_SVG_SURFACE;
+const long __c2ffi_CAIRO_HAS_SCRIPT_SURFACE = CAIRO_HAS_SCRIPT_SURFACE;
+const long __c2ffi_CAIRO_HAS_XLIB_XRENDER_SURFACE = CAIRO_HAS_XLIB_XRENDER_SURFACE;
+const long __c2ffi_CAIRO_HAS_XLIB_SURFACE = CAIRO_HAS_XLIB_SURFACE;
+const long __c2ffi_CAIRO_HAS_XCB_SURFACE = CAIRO_HAS_XCB_SURFACE;
+const long __c2ffi_CAIRO_HAS_XCB_SHM_FUNCTIONS = CAIRO_HAS_XCB_SHM_FUNCTIONS;
+const long __c2ffi_CAIRO_HAS_OBSERVER_SURFACE = CAIRO_HAS_OBSERVER_SURFACE;
+const long __c2ffi_CAIRO_HAS_MIME_SURFACE = CAIRO_HAS_MIME_SURFACE;
+const long __c2ffi_CAIRO_HAS_IMAGE_SURFACE = CAIRO_HAS_IMAGE_SURFACE;
+const long __c2ffi_CAIRO_HAS_RECORDING_SURFACE = CAIRO_HAS_RECORDING_SURFACE;
+const long __c2ffi_CAIRO_HAS_PS_SURFACE = CAIRO_HAS_PS_SURFACE;
+const long __c2ffi_CAIRO_HAS_PNG_FUNCTIONS = CAIRO_HAS_PNG_FUNCTIONS;
+const long __c2ffi_CAIRO_HAS_PDF_SURFACE = CAIRO_HAS_PDF_SURFACE;
+const long __c2ffi_CAIRO_VERSION_MICRO = CAIRO_VERSION_MICRO;
+const long __c2ffi_CAIRO_HAS_GOBJECT_FUNCTIONS = CAIRO_HAS_GOBJECT_FUNCTIONS;
+const long __c2ffi_CAIRO_VERSION_MINOR = CAIRO_VERSION_MINOR;
+const long __c2ffi_CAIRO_VERSION_MAJOR = CAIRO_VERSION_MAJOR;
+const long __c2ffi_CAIRO_HAS_FT_FONT = CAIRO_HAS_FT_FONT;
+const char* __c2ffi_CAIRO_MIME_TYPE_PNG = CAIRO_MIME_TYPE_PNG;
+const long __c2ffi_CAIRO_HAS_FC_FONT = CAIRO_HAS_FC_FONT;
+const char* __c2ffi_CAIRO_MIME_TYPE_JPEG = CAIRO_MIME_TYPE_JPEG;
+const char* __c2ffi_CAIRO_MIME_TYPE_JP2 = CAIRO_MIME_TYPE_JP2;
+const char* __c2ffi_CAIRO_TAG_LINK = CAIRO_TAG_LINK;
+const char* __c2ffi_CAIRO_TAG_DEST = CAIRO_TAG_DEST;
