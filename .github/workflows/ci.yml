@@ -24,4 +24,4 @@ jobs:
       - name: Run tests
         run: bundle exec rake test
         env:
-          C2FFI: ${{ github.workspace }}/c2ffi-llvm-16.0.0/build/c2ffi
+          C2FFI: c2ffi-llvm-16.0.0/build/c2ffi
