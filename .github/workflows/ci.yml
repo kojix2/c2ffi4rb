@@ -3,7 +3,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: ["ubuntu-24.04"]
