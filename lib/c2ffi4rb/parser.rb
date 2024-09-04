@@ -7,7 +7,7 @@ module C2FFI4RB
     TYPE_TABLE = {
       ':unsigned-int' => ':uint',
       ':unsigned-char' => ':uchar',
-      ':unsinged-short' => ':ushort',
+      ':unsigned-short' => ':ushort',
       ':long-long' => ':long_long',
       ':unsigned-long' => ':ulong',
       ':unsigned-long-long' => ':ulong_long',
@@ -15,7 +15,7 @@ module C2FFI4RB
     }
 
     def self.parse(arr)
-      Parser.new.parse(arr)
+      new.parse(arr)
     end
 
     def initialize
@@ -25,67 +25,76 @@ module C2FFI4RB
     end
 
     def parse(arr)
-      arr.each do |form|
-        parse_toplevel(form)
-      end
-
+      arr.each { |form| process_toplevel(form) }
       puts @toplevels.join("\n\n")
     end
 
     private
 
-    def parse_toplevel(form)
+    def process_toplevel(form)
       lines = \
         case form[:tag]
-        when 'typedef'
-          type = parse_type(form[:type])
-
-          # I don't think typedef works right with structs, so assign
-          if @struct_type.include?(type)
-            name = add_struct(form[:name])
-            "#{name} = #{type}"
-          else
-            "typedef #{type}, :#{form[:name]}"
-          end
-
-        when 'const'
-          type = parse_type(form[:type])
-          if type == ':string'
-            "#{form[:name].upcase} = \"#{form[:value]}\""
-          else
-            "#{form[:name].upcase} = #{form[:value]}"
-          end
-
-        when 'extern'
-          'attach_variable ' \
-              ":#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
-
-        when 'function'
-          l = []
-          l << "attach_function '#{form[:name]}', ["
-          form[:parameters].each do |f|
-            l << "  #{parse_type(f[:type])},"
-          end
-          l << "], #{parse_type(form['return-type'.intern])}"
-          #          emacs doesn't like :"foo" ---^
-          l.join("\n")
-
-        when 'struct', 'union'
-          make_struct(form)
-
-        when 'enum'
-          name = add_enum(form[:name])
-          l = []
-          l << "enum #{name}, ["
-          form[:fields].each do |f|
-            l << "  :#{f[:name]}, #{f[:value]},"
-          end
-          l << ']'
-          l.join("\n")
+        when 'typedef'         then parse_typedef(form)
+        when 'const'           then parse_const(form)
+        when 'extern'          then parse_extern(form)
+        when 'function'        then parse_function(form)
+        when 'struct', 'union' then parse_struct_or_union(form)
+        when 'enum'            then parse_enum(form)
+        else
+          raise "Unknown form: #{form[:tag]}"
         end
 
       @toplevels << lines
-      nil
+    end
+
+    def parse_typedef(form)
+      type = parse_type(form[:type])
+
+      if @struct_type.include?(type)
+        name = add_struct(form[:name])
+        "#{name} = #{type}"
+      else
+        "typedef #{type}, :#{form[:name]}"
+      end
+    end
+
+    def parse_const(form)
+      type = parse_type(form[:type])
+      if type == ':string'
+        "#{form[:name].upcase} = \"#{form[:value]}\""
+      else
+        "#{form[:name].upcase} = #{form[:value]}"
+      end
+    end
+
+    def parse_extern(form)
+      'attach_variable ' \
+          ":#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
+    end
+
+    def parse_function(form)
+      l = []
+      l << "attach_function '#{form[:name]}', ["
+      form[:parameters].each do |f|
+        l << "  #{parse_type(f[:type])},"
+      end
+      l << "], #{parse_type(form['return-type'.intern])}"
+      l.join("\n")
+    end
+
+    def parse_struct_or_union(form)
+      make_struct(form)
+    end
+
+    def parse_enum(form)
+      name = add_enum(form[:name])
+      l = []
+      l << "enum #{name}, ["
+      form[:fields].each do |f|
+        l << "  :#{f[:name]}, #{f[:value]},"
+      end
+      l << ']'
+      l.join("\n")
     end
 
     def add_struct(name)
@@ -155,43 +164,45 @@ module C2FFI4RB
       return tt if tt
 
       case form[:tag]
-      when ':pointer'
-        pointee = parse_type(form[:type])
-        if [':char', ':uchar'].include?(pointee)
-          ':string'
-        elsif @struct_type.include?(pointee)
-          "#{pointee}.ptr"
-        else
-          ':pointer'
-        end
-
-      when ':array'
-        "[#{parse_type(form[:type])}, #{form[:size]}]"
-
-      when ':struct', ':union'
-        add_struct(form[:name])
-
-      when ':enum'
-        add_enum(form[:name])
-
-      when 'enum'
-        form[:name] = add_enum(form[:name])
-        parse_toplevel(form)
-        form[:name]
-
-      when 'struct', 'union'
-        form[:name] = add_struct(form[:name])
-        parse_toplevel(form)
-        form[:name]
-
-      else
-        # All non-Classy types are :-prefixed?
-        if form[:tag][0] != ':'
-          ":#{form[:tag]}"
-        else
-          form[:tag]
-        end
+      when ':pointer'          then parse_pointer_type(form)
+      when ':array'            then parse_array_type(form)
+      when ':struct', ':union' then add_struct(form[:name])
+      when ':enum'             then add_enum(form[:name])
+      when 'enum'              then parse_enum_type(form)
+      when 'struct', 'union'   then parse_struct_or_union_type(form)
+      else parse_default_type(form)
       end
+    end
+
+    def parse_pointer_type(form)
+      pointee = parse_type(form[:type])
+      if [':char', ':uchar'].include?(pointee)
+        ':string'
+      elsif @struct_type.include?(pointee)
+        "#{pointee}.ptr"
+      else
+        ':pointer'
+      end
+    end
+
+    def parse_array_type(form)
+      "[#{parse_type(form[:type])}, #{form[:size]}]"
+    end
+
+    def parse_enum_type(form)
+      form[:name] = add_enum(form[:name])
+      process_toplevel(form)
+      form[:name]
+    end
+
+    def parse_struct_or_union_type(form)
+      form[:name] = add_struct(form[:name])
+      process_toplevel(form)
+      form[:name]
+    end
+
+    def parse_default_type(form)
+      form[:tag].start_with?(':') ? form[:tag] : ":#{form[:tag]}"
     end
   end
 end
