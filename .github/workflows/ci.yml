@@ -3,10 +3,10 @@ on: [push, pull_request]
 jobs:
   build:
     name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
-        os: ["ubuntu-24.04"]
+        os: ["ubuntu"]
         ruby: ["3.3"]
     steps:
       - uses: actions/checkout@v3
@@ -16,14 +16,12 @@ jobs:
           bundler-cache: true
       - name: Build c2ffi
         run: |
-          sudo apt-get install -y clang-18 llvm-18-dev libclang-18-dev libcurl4-gnutls-dev
-          sudo apt-get install -y llvm-16-dev libclang-16-dev # I don't know why this is needed
+          sudo apt-get install -y clang-16 llvm-16-dev libclang-16-dev libcurl4-gnutis-dev
           clang --version
-          wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-18.1.0.zip
-          unzip llvm-18.1.0.zip
-          cd c2ffi-llvm-18.1.0
-          mkdir build && cd build && cmake .. && make -j$(nproc)
+          wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-16.0.0.zip
+          unzip llvm-16.0.0.zip
+          cd c2ffi-llvm-16.0.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
       - name: Run tests
         run: bundle exec rake test
         env:
-          C2FFI: ${{ github.workspace }}/c2ffi-llvm-18.1.0/build/bin/c2ffi
+          C2FFI: ${{ github.workspace }}/c2ffi-llvm-16.0.0/build/c2ffi
