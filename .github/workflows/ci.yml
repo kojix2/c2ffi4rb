@@ -16,7 +16,8 @@ jobs:
           bundler-cache: true
       - name: Build c2ffi
         run: |
-          sudo apt-get install -y clang-16 llvm-16-dev libclang-16-dev libcurl4-gnutis-dev
+          dpkg -l | grep libcurl
+          sudo apt-get install -y clang-16 llvm-16-dev libclang-16-dev
           clang --version
           wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-16.0.0.zip
           unzip llvm-16.0.0.zip
