@@ -3,10 +3,10 @@ on: [push, pull_request]
 jobs:
   build:
     name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu"]
+        os: ["ubuntu-24.04"]
         ruby: ["3.3"]
     steps:
       - uses: actions/checkout@v3
