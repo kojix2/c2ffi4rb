@@ -3,7 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/c2ffi4rb.svg)](https://badge.fury.io/rb/c2ffi4rb)
 [![test](https://github.com/kojix2/c2ffi4rb/actions/workflows/ci.yml/badge.svg)](https://github.com/kojix2/c2ffi4rb/actions/workflows/ci.yml)
 
-
 [c2ffi](https://github.com/rpav/c2ffi) - FFI binding generator - for Ruby
 
 ## installation

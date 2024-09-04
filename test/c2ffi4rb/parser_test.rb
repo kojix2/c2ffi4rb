@@ -29,7 +29,8 @@ module C2FFI4RB
                                              type: { tag: ':pointer', type: { tag: ':struct', name: '_fpstate', id: 85 } } },
                                            { tag: 'field', name: '__fpstate_word', "bit-offset": 0, "bit-size": 64, "bit-alignment": 64,
                                              type: { tag: '__uint64_t' } }] } }] }
-      assert_equal "class Sigcontext < FFI::Struct\n  layout \\\n    :anon_field_0, Anon_Type_1\nend", parser.send(:make_struct, form)
+      assert_equal "class Sigcontext < FFI::Struct\n  layout \\\n    :anon_field_0, Anon_Type_1\nend",
+                   parser.send(:make_struct, form)
     end
   end
 end
