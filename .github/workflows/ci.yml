@@ -17,6 +17,7 @@ jobs:
       - name: Build c2ffi
         run: |
           sudo apt-get install -y llvm-18-dev libclang-18-dev libcurl4-gnutls-dev
+          sudo apt-get remove -y llvm-16
           wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-18.1.0.zip
           unzip llvm-18.1.0.zip
           cd c2ffi-llvm-18.1.0
