@@ -12,7 +12,7 @@ module C2FFI4RB
       ':unsigned-long' => ':ulong',
       ':unsigned-long-long' => ':ulong_long',
       ':function-pointer' => ':pointer'
-    }
+    }.freeze
 
     def self.parse(arr)
       new.parse(arr)
@@ -32,24 +32,25 @@ module C2FFI4RB
     private
 
     def process_toplevel(form)
-      lines = \
-        case form[:tag]
-        when 'typedef'         then parse_typedef(form)
-        when 'const'           then parse_const(form)
-        when 'extern'          then parse_extern(form)
-        when 'function'        then parse_function(form)
-        when 'struct', 'union' then parse_struct_or_union(form)
-        when 'enum'            then parse_enum(form)
-        else
-          raise "Unknown form: #{form[:tag]}"
-        end
-
+      lines = parse_form(form)
       @toplevels << lines
+    end
+
+    def parse_form(form)
+      case form[:tag]
+      when 'typedef'         then parse_typedef(form)
+      when 'const'           then parse_const(form)
+      when 'extern'          then parse_extern(form)
+      when 'function'        then parse_function(form)
+      when 'struct', 'union' then parse_struct_or_union(form)
+      when 'enum'            then parse_enum(form)
+      else
+        raise "Unknown form: #{form[:tag]}"
+      end
     end
 
     def parse_typedef(form)
       type = parse_type(form[:type])
-
       if @struct_type.include?(type)
         name = add_struct(form[:name])
         "#{name} = #{type}"
@@ -60,26 +61,21 @@ module C2FFI4RB
 
     def parse_const(form)
       type = parse_type(form[:type])
-      if type == ':string'
-        "#{form[:name].upcase} = \"#{form[:value]}\""
-      else
-        "#{form[:name].upcase} = #{form[:value]}"
-      end
+      value = type == ':string' ? "\"#{form[:value]}\"" : form[:value]
+      "#{form[:name].upcase} = #{value}"
     end
 
     def parse_extern(form)
-      'attach_variable ' \
-          ":#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
+      "attach_variable :#{form[:name]}, :#{form[:name]}, #{parse_type(form[:type])}"
     end
 
     def parse_function(form)
-      l = []
-      l << "attach_function '#{form[:name]}', ["
-      form[:parameters].each do |f|
-        l << "  #{parse_type(f[:type])},"
-      end
-      l << "], #{parse_type(form['return-type'.intern])}"
-      l.join("\n")
+      params = form[:parameters].map { |f| "  #{parse_type(f[:type])}," }.join("\n")
+      <<~FUNCTION
+        attach_function '#{form[:name]}', [
+        #{params}
+        ], #{parse_type(form[:'return-type'])}
+      FUNCTION
     end
 
     def parse_struct_or_union(form)
@@ -88,25 +84,24 @@ module C2FFI4RB
 
     def parse_enum(form)
       name = add_enum(form[:name])
-      l = []
-      l << "enum #{name}, ["
-      form[:fields].each do |f|
-        l << "  :#{f[:name]}, #{f[:value]},"
-      end
-      l << ']'
-      l.join("\n")
+      fields = form[:fields].map { |f| "  :#{f[:name]}, #{f[:value]}," }.join("\n")
+      <<~ENUM
+        enum #{name}, [
+        #{fields}
+        ]
+      ENUM
     end
 
     def add_struct(name)
       # Anonymous structs are given a name
-      if name == ''
+      if name.empty?
         @anon_counter += 1
         name = "Anon_Type_#{@anon_counter}"
         return name
       end
 
       # Do not allow names that start with an underscore
-      name = 'C' + name if name.start_with? '_'
+      name = 'C' + name if name.start_with?('_')
 
       # Convert snake_case to CamelCase
       name.capitalize!
@@ -118,14 +113,14 @@ module C2FFI4RB
 
     def add_enum(name)
       # Anonymous enums are given a name
-      if name == ''
+      if name.empty?
         @anon_counter += 1
-        name = ':anon_type_' + @anon_counter.to_s
+        name = ":anon_type_#{@anon_counter}"
         return name
       end
 
       # All enums are prefixed with a colon
-      name = ":#{name}" unless name.start_with? ':'
+      name = ":#{name}" unless name.start_with?(':')
       name
     end
 
@@ -160,17 +155,16 @@ module C2FFI4RB
     end
 
     def parse_type(form)
-      tt = TYPE_TABLE[form[:tag]]
-      return tt if tt
-
-      case form[:tag]
-      when ':pointer'          then parse_pointer_type(form)
-      when ':array'            then parse_array_type(form)
-      when ':struct', ':union' then add_struct(form[:name])
-      when ':enum'             then add_enum(form[:name])
-      when 'enum'              then parse_enum_type(form)
-      when 'struct', 'union'   then parse_struct_or_union_type(form)
-      else parse_default_type(form)
+      TYPE_TABLE.fetch(form[:tag]) do
+        case form[:tag]
+        when ':pointer'          then parse_pointer_type(form)
+        when ':array'            then parse_array_type(form)
+        when ':struct', ':union' then add_struct(form[:name])
+        when ':enum'             then add_enum(form[:name])
+        when 'enum'              then parse_enum_type(form)
+        when 'struct', 'union'   then parse_struct_or_union_type(form)
+        else parse_default_type(form)
+        end
       end
     end
 
