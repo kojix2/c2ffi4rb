@@ -17,7 +17,7 @@ jobs:
       - name: Build c2ffi
         run: |
           wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-18.1.0.zip
-          unzip c2ffi-llvm-18.1.0.zip
+          unzip llvm-18.1.0.zip
           cd c2ffi-llvm-18.1.0
           mkdir build && cd build && cmake .. && make -j$(nproc)
       - name: Run tests
