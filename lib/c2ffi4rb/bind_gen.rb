@@ -92,7 +92,7 @@ module C2FFI4RB
       ENUM
     end
 
-    def define_struct(name)
+    def normalize_struct_name(name)
       # Anonymous structs are given a name
       if name.empty?
         @anon_counter += 1
@@ -108,8 +108,11 @@ module C2FFI4RB
 
       name.gsub!(/_([a-z])/) { |m| "#{m[1].upcase}" }
 
-      @struct_type << name unless @struct_type.include? name
       name
+    end
+
+    def register_struct(name)
+      @struct_type << name unless @struct_type.include? name
     end
 
     def normalize_enum_name(name)
@@ -124,8 +127,19 @@ module C2FFI4RB
       name
     end
 
+    def define_struct(name)
+      name = normalize_struct_name(name)
+      register_struct(name)
+      name
+    end
+
     def create_struct_definition(form)
-      name = define_struct(form[:name])
+      normalized_name = normalize_struct_name(form[:name])
+      # FIXME: This is a hack to avoid redefining structs
+      return "# Already define? #{normalized_name}" if @struct_type.include?(normalized_name)
+
+      name = register_struct(normalized_name)
+
       type = form[:tag] == 'struct' ? 'FFI::Struct' : 'FFI::Union'
 
       lines = ["class #{name} < #{type}"]
@@ -183,7 +197,7 @@ module C2FFI4RB
     end
 
     def define_struct_or_union_type(form)
-      form[:name] = define_struct(form[:name])
+      form[:name] = normalize_struct_name(form[:name])
       process_toplevel(form)
       form[:name]
     end
