@@ -112,7 +112,11 @@ module C2FFI4RB
     end
 
     def register_struct(name)
-      @struct_type << name unless @struct_type.include? name
+      if @struct_type.include? name
+        false
+      else
+        @struct_type << name
+      end
     end
 
     def normalize_enum_name(name)
@@ -134,11 +138,11 @@ module C2FFI4RB
     end
 
     def create_struct_definition(form)
-      normalized_name = normalize_struct_name(form[:name])
+      name = normalize_struct_name(form[:name])
       # FIXME: This is a hack to avoid redefining structs
-      return "# Already define? #{normalized_name}" if @struct_type.include?(normalized_name)
+      return "# Already define? #{name}" if @struct_type.include?(name)
 
-      name = register_struct(normalized_name)
+      register_struct(name)
 
       type = form[:tag] == 'struct' ? 'FFI::Struct' : 'FFI::Union'
 
