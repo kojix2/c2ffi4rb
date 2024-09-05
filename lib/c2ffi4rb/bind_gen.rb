@@ -106,7 +106,7 @@ module C2FFI4RB
 
         @anon_enum_ids << id
       end
-      name = normalize_enum_name(form[:name])
+      name = normalize_enum_name(form[:name], form[:id])
       fields = form[:fields].map { |f| "  :#{f[:name]}, #{f[:value]}," }.join("\n")
       <<~ENUM
         enum #{name}, [
@@ -142,11 +142,10 @@ module C2FFI4RB
       end
     end
 
-    def normalize_enum_name(name)
+    def normalize_enum_name(name, id)
       # Anonymous enums are given a name
       if name.empty?
-        @anon_counter += 1
-        name = "anon_type_#{@anon_counter}"
+        name = "anon_enum_#{id}"
       end
 
       # All enums are prefixed with a colon
@@ -195,7 +194,7 @@ module C2FFI4RB
         when ':pointer'          then resolve_pointer_type(form)
         when ':array'            then resolve_array_type(form)
         when ':struct', ':union' then define_struct(form[:name])
-        when ':enum'             then normalize_enum_name(form[:name])
+        when ':enum'             then normalize_enum_name(form[:name], form[:id])
         when 'struct', 'union'   then define_struct_or_union_type(form)
         when 'enum'              then normalize_enum_name_type(form)
         else resolve_default_type(form)
@@ -219,7 +218,7 @@ module C2FFI4RB
     end
 
     def normalize_enum_name_type(form)
-      form[:name] = normalize_enum_name(form[:name])
+      form[:name] = normalize_enum_name(form[:name], form[:id])
       process_toplevel(form)
       form[:name]
     end
