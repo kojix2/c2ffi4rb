@@ -12,7 +12,7 @@ module C2FFI4RB
                "bit-size": 0,
                "bit-alignment": 0,
                fields: [] }
-      assert_equal "class Gtestsuite < FFI::Struct\nend", parser.send(:create_struct_definition, form)
+      assert_equal "class GTestSuite < FFI::Struct\nend", parser.send(:create_struct_definition, form)
     end
 
     def test_create_struct_definition_with_form_which_has_anonymous_field
@@ -29,7 +29,7 @@ module C2FFI4RB
                                              type: { tag: ':pointer', type: { tag: ':struct', name: '_fpstate', id: 85 } } },
                                            { tag: 'field', name: '__fpstate_word', "bit-offset": 0, "bit-size": 64, "bit-alignment": 64,
                                              type: { tag: '__uint64_t' } }] } }] }
-      assert_equal "class Sigcontext < FFI::Struct\n  layout \\\n    :anon_field_0, AnonType_1\nend",
+      assert_equal "class Sigcontext < FFI::Struct\n  layout \\\n    :anon_field_0, Anon_Type_1\nend",
                    parser.send(:create_struct_definition, form)
     end
   end
