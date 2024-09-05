@@ -23,6 +23,7 @@ module C2FFI4RB
       @toplevels = []
       @anon_counter = 0
       @anon_enum_ids = []
+      @typedefs = {}
     end
 
     def generate_bindings(arr)
@@ -55,7 +56,16 @@ module C2FFI4RB
       if @struct_type.include?(type)
         name = define_struct(form[:name])
         "#{name} = #{type}"
+      elsif type == ":{#{form[:name]}}"
+        warn "Ignoring self-referential typedef #{form[:name]}"
       else
+        if @typedefs.has_key?(form[:name])
+          return "# typedef already defined? #{form[:name]}" if @typedefs[form[:name]] == type
+
+          warn "# Redefinition of #{form[:name]} from #{@typedefs[form[:name]]} to #{type}"
+
+        end
+        @typedefs[form[:name]] = type
         "typedef #{type}, :#{form[:name]}"
       end
     end
