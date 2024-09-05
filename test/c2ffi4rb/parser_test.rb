@@ -12,7 +12,7 @@ module C2FFI4RB
                "bit-size": 0,
                "bit-alignment": 0,
                fields: [] }
-      assert_equal "class GTestSuite < FFI::Struct\nend", parser.send(:create_struct_definition, form)
+      assert_equal "class GTestSuite < ::FFI::Struct\nend", parser.send(:create_struct_definition, form)
     end
 
     def test_create_struct_definition_with_form_which_has_anonymous_field
