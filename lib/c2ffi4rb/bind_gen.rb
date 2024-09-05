@@ -231,6 +231,10 @@ module C2FFI4RB
     end
 
     def resolve_default_type(form)
+      ## FIXME
+      st_name = normalize_struct_name(form[:tag])
+      return st_name if @struct_type.include?(st_name)
+      
       form[:tag].start_with?(':') ? form[:tag] : ":#{form[:tag]}"
     end
   end
