@@ -8,7 +8,7 @@ require 'c2ffi4rb'
 require 'minitest/autorun'
 require 'minitest/pride'
 
-C2FFI=ENV['C2FFI'] || 'c2ffi'
+C2FFI = ENV['C2FFI'] || 'c2ffi'
 
 Fixture = Struct.new(:name, :source_header, :macros_header, :output_json, :macros_json, :output_ruby,
                      keyword_init: true) do

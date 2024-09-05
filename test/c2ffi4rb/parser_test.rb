@@ -1,9 +1,9 @@
 require_relative '../test_helper'
 
 module C2FFI4RB
-  class ParserTest < Minitest::Test
-    def test_make_struct_with_simple_struct
-      parser = C2FFI4RB::Parser.new
+  class BindGenTest < Minitest::Test
+    def test_create_struct_definition_with_simple_struct
+      parser = C2FFI4RB::BindGen.new
       form = { tag: 'struct',
                ns: 0,
                name: 'GTestSuite',
@@ -12,11 +12,11 @@ module C2FFI4RB
                "bit-size": 0,
                "bit-alignment": 0,
                fields: [] }
-      assert_equal "class Gtestsuite < FFI::Struct\nend", parser.send(:make_struct, form)
+      assert_equal "class Gtestsuite < FFI::Struct\nend", parser.send(:create_struct_definition, form)
     end
 
-    def test_make_struct_with_form_which_has_anonymous_field
-      parser = C2FFI4RB::Parser.new
+    def test_create_struct_definition_with_form_which_has_anonymous_field
+      parser = C2FFI4RB::BindGen.new
       form = { tag: 'struct', ns: 0, name: 'Sigcontext', id: 0,
                location: '/path/to/include/bits/modified_sigcontext.h:139:8',
                "bit-size": 2048,
@@ -30,7 +30,7 @@ module C2FFI4RB
                                            { tag: 'field', name: '__fpstate_word', "bit-offset": 0, "bit-size": 64, "bit-alignment": 64,
                                              type: { tag: '__uint64_t' } }] } }] }
       assert_equal "class Sigcontext < FFI::Struct\n  layout \\\n    :anon_field_0, Anon_Type_1\nend",
-                   parser.send(:make_struct, form)
+                   parser.send(:create_struct_definition, form)
     end
   end
 end
