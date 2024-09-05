@@ -5,10 +5,16 @@ require 'json'
 module C2FFI4RB
   class BindGen
     TYPE_TABLE = {
+      ':signed-int' => ':int',
       ':unsigned-int' => ':uint',
+      ':signed-char' => ':char',
       ':unsigned-char' => ':uchar',
+      ':signed-short' => ':short',
       ':unsigned-short' => ':ushort',
       ':long-long' => ':long_long',
+      ':ulong-long' => ':ulong_long', 
+      ':long-double' => ':long_double',
+      ':signed-long' => ':long',
       ':unsigned-long' => ':ulong',
       ':unsigned-long-long' => ':ulong_long',
       ':function-pointer' => ':pointer'
