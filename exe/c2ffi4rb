@@ -30,4 +30,4 @@ ARGV.each do |file|
   end
 end
 
-C2FFI4RB::Parser.parse(spec)
+C2FFI4RB::BindGen.generate_bindings(spec)
