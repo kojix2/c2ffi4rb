@@ -167,7 +167,8 @@ module C2FFI4RB
 
       register_struct(name)
 
-      type = form[:tag] == 'struct' ? 'FFI::Struct' : 'FFI::Union'
+      # FIXME ::FFI::Struct or FFI::Struct
+      type = form[:tag] == 'struct' ? '::FFI::Struct' : '::FFI::Union'
 
       lines = ["class #{name} < #{type}"]
 
