@@ -22,6 +22,7 @@ module C2FFI4RB
       @struct_type = []
       @toplevels = []
       @anon_counter = 0
+      @anon_enum_ids = []
     end
 
     def generate_bindings(arr)
@@ -83,6 +84,12 @@ module C2FFI4RB
     end
 
     def generate_enum(form)
+      id = form[:id]
+      if form[:name].empty?
+        return "# Already defined? anon_type_#{id}" if @anon_enum_ids.include?(id)
+
+        @anon_enum_ids << id
+      end
       name = normalize_enum_name(form[:name])
       fields = form[:fields].map { |f| "  :#{f[:name]}, #{f[:value]}," }.join("\n")
       <<~ENUM
@@ -140,7 +147,7 @@ module C2FFI4RB
     def create_struct_definition(form)
       name = normalize_struct_name(form[:name])
       # FIXME: This is a hack to avoid redefining structs
-      return "# Already define? #{name}" if @struct_type.include?(name)
+      return "# Already defined? #{name}" if @struct_type.include?(name)
 
       register_struct(name)
 
