@@ -87,7 +87,9 @@ module C2FFI4RB
     end
 
     def generate_function(form)
-      params = form[:parameters].map { |f| "  #{resolve_type(f[:type])}," }.join("\n")
+      params = form[:parameters].map do |f|
+        (f[:type][:tag] == "array") ? "  :pointer, #{resolve_type(f[:type])}" : "  #{resolve_type(f[:type])},"
+      end.join("\n")
       <<~FUNCTION
         attach_function '#{form[:name]}', [
         #{params}
