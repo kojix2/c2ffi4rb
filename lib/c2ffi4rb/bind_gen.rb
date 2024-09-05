@@ -104,7 +104,8 @@ module C2FFI4RB
       name = 'C' + name if name.start_with?('_')
 
       # Convert snake_case to CamelCase
-      name.capitalize!
+      name = name[0].upcase + name[1..-1]
+
       name.gsub!(/_([a-z])/) { |m| "#{m[1].upcase}" }
 
       @struct_type << name unless @struct_type.include? name
