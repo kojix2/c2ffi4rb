@@ -12,7 +12,7 @@ module C2FFI4RB
       ':signed-short' => ':short',
       ':unsigned-short' => ':ushort',
       ':long-long' => ':long_long',
-      ':ulong-long' => ':ulong_long', 
+      ':ulong-long' => ':ulong_long',
       ':long-double' => ':long_double',
       ':signed-long' => ':long',
       ':unsigned-long' => ':ulong',
@@ -92,7 +92,7 @@ module C2FFI4RB
 
     def generate_function(form)
       params = form[:parameters].map do |f|
-        (f[:type][:tag] == ":array") ? "  :pointer, # #{resolve_type(f[:type])}" : "  #{resolve_type(f[:type])},"
+        f[:type][:tag] == ':array' ? "  :pointer, # #{resolve_type(f[:type])}" : "  #{resolve_type(f[:type])},"
       end.join("\n")
       <<~FUNCTION
         attach_function '#{form[:name]}', [
@@ -150,9 +150,7 @@ module C2FFI4RB
 
     def normalize_enum_name(name, id)
       # Anonymous enums are given a name
-      if name.empty?
-        name = "anon_enum_#{id}"
-      end
+      name = "anon_enum_#{id}" if name.empty?
 
       # All enums are prefixed with a colon
       name = ":#{name}" unless name.start_with?(':')
@@ -172,7 +170,7 @@ module C2FFI4RB
 
       register_struct(name)
 
-      # FIXME ::FFI::Struct or FFI::Struct
+      # FIXME: :FFI::Struct or FFI::Struct
       type = form[:tag] == 'struct' ? '::FFI::Struct' : '::FFI::Union'
 
       lines = ["class #{name} < #{type}"]
@@ -239,7 +237,7 @@ module C2FFI4RB
       ## FIXME
       st_name = normalize_struct_name(form[:tag])
       return st_name if @struct_type.include?(st_name)
-      
+
       form[:tag].start_with?(':') ? form[:tag] : ":#{form[:tag]}"
     end
   end
