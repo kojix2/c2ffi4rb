@@ -61,7 +61,11 @@ module C2FFI4RB
       type = resolve_type(form[:type])
       if @struct_type.include?(type)
         name = define_struct(form[:name])
-        "#{name} = #{type}"
+        if name == type
+          "# #{name} = #{type}"
+        else
+          "#{name} = #{type}"
+        end
       elsif type == ":{#{form[:name]}}"
         warn "Ignoring self-referential typedef #{form[:name]}"
       else
