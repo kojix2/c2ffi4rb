@@ -83,7 +83,7 @@ module C2FFI4RB
     end
 
     def generate_enum(form)
-      name = define_enum(form[:name])
+      name = normalize_enum_name(form[:name])
       fields = form[:fields].map { |f| "  :#{f[:name]}, #{f[:value]}," }.join("\n")
       <<~ENUM
         enum #{name}, [
@@ -111,12 +111,11 @@ module C2FFI4RB
       name
     end
 
-    def define_enum(name)
+    def normalize_enum_name(name)
       # Anonymous enums are given a name
       if name.empty?
         @anon_counter += 1
-        name = ":anon_type_#{@anon_counter}"
-        return name
+        name = "anon_type_#{@anon_counter}"
       end
 
       # All enums are prefixed with a colon
@@ -126,32 +125,25 @@ module C2FFI4RB
 
     def create_struct_definition(form)
       name = define_struct(form[:name])
+      type = form[:tag] == 'struct' ? 'FFI::Struct' : 'FFI::Union'
 
-      type = if form[:tag] == 'struct'
-               'FFI::Struct'
-             else
-               'FFI::Union'
-             end
+      lines = ["class #{name} < #{type}"]
 
-      l = []
-      l << "class #{name} < #{type}"
-
-      if form[:fields].length.positive?
-        l << '  layout \\'
-        size = form[:fields].length
+      if form[:fields].any?
+        lines << '  layout \\'
         anon_field_counter = 0
+
         form[:fields].each_with_index do |f, i|
-          sep = i >= (size - 1) ? '' : ','
-          field_name = f[:name]
-          if field_name.empty?
-            field_name = "anon_field_#{anon_field_counter}"
-            anon_field_counter += 1
-          end
-          l << "    :#{field_name}, #{resolve_type(f[:type])}#{sep}"
+          field_name = f[:name].empty? ? "anon_field_#{anon_field_counter}" : f[:name]
+          anon_field_counter += 1 if f[:name].empty?
+
+          sep = i == form[:fields].size - 1 ? '' : ','
+          lines << "    :#{field_name}, #{resolve_type(f[:type])}#{sep}"
         end
       end
-      l << 'end'
-      l.join("\n")
+
+      lines << 'end'
+      lines.join("\n")
     end
 
     def resolve_type(form)
@@ -160,9 +152,9 @@ module C2FFI4RB
         when ':pointer'          then resolve_pointer_type(form)
         when ':array'            then resolve_array_type(form)
         when ':struct', ':union' then define_struct(form[:name])
-        when ':enum'             then define_enum(form[:name])
-        when 'enum'              then define_enum_type(form)
+        when ':enum'             then normalize_enum_name(form[:name])
         when 'struct', 'union'   then define_struct_or_union_type(form)
+        when 'enum'              then normalize_enum_name_type(form)
         else resolve_default_type(form)
         end
       end
@@ -183,8 +175,8 @@ module C2FFI4RB
       "[#{resolve_type(form[:type])}, #{form[:size]}]"
     end
 
-    def define_enum_type(form)
-      form[:name] = define_enum(form[:name])
+    def normalize_enum_name_type(form)
+      form[:name] = normalize_enum_name(form[:name])
       process_toplevel(form)
       form[:name]
     end
