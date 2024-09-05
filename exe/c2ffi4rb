@@ -8,8 +8,20 @@
 require 'optparse'
 require 'c2ffi4rb'
 
+type_table = {}
+
 opts = OptionParser.new
 opts.banner = 'Usage: c2ffi4rb [options] [file1, file2, ...]'
+opts.on('-t FILE', '--table FILE', 'Type conversion table TSV') do |file|
+  File.open(file) do |io|
+    io.each_line do |line|
+      next if line =~ /^#/
+
+      from, to = line.chomp.split("\t")
+      type_table[from] = to
+    end
+  end
+end
 opts.on('-h', '--help', 'Show this message') do
   puts opts
   exit
@@ -32,4 +44,4 @@ ARGV.each do |file|
   end
 end
 
-C2FFI4RB::BindGen.generate_bindings(spec)
+C2FFI4RB::BindGen.new(type_table).generate_bindings(spec)

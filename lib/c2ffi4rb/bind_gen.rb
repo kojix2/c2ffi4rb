@@ -4,7 +4,7 @@ require 'json'
 
 module C2FFI4RB
   class BindGen
-    TYPE_TABLE = {
+    DEFAULT_TYPE_TABLE = {
       ':signed-int' => ':int',
       ':unsigned-int' => ':uint',
       ':signed-char' => ':char',
@@ -18,13 +18,14 @@ module C2FFI4RB
       ':unsigned-long' => ':ulong',
       ':unsigned-long-long' => ':ulong_long',
       ':function-pointer' => ':pointer'
-    }.freeze
+    }
 
     def self.generate_bindings(arr)
       new.generate_bindings(arr)
     end
 
-    def initialize
+    def initialize(type_table = {})
+      @type_table = DEFAULT_TYPE_TABLE.merge(type_table)
       @struct_type = []
       @toplevels = []
       @anon_counter = 0
@@ -193,7 +194,7 @@ module C2FFI4RB
     end
 
     def resolve_type(form)
-      TYPE_TABLE.fetch(form[:tag]) do
+      @type_table.fetch(form[:tag]) do
         case form[:tag]
         when ':pointer'          then resolve_pointer_type(form)
         when ':array'            then resolve_array_type(form)
