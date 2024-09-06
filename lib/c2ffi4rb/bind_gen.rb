@@ -76,6 +76,7 @@ module C2FFI4RB
           warn "# Redefinition of #{form[:name]} from #{@typedefs[form[:name]]} to #{type}"
 
         end
+        "typedef :pointer, :#{form[:name]} # #{type}" if form[:type][:tag] == ':array'
         @typedefs[form[:name]] = type
         "typedef #{type}, :#{form[:name]}"
       end
