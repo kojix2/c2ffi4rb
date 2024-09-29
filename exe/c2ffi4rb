@@ -32,7 +32,7 @@ opts.on('-v', '--version', 'Show version') do
 end
 opts.parse!
 
-if ARGV.empty?
+if ARGV.empty? && $stdin.tty?
   warn opts
   exit 1
 end
