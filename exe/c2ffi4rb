@@ -44,4 +44,6 @@ ARGV.each do |file|
   end
 end
 
+spec += JSON.parse($stdin.read, Hash[:symbolize_names, true]) unless $stdin.tty?
+
 C2FFI4RB::BindGen.new(type_table).generate_bindings(spec)
