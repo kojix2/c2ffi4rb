@@ -9,3 +9,9 @@
 /vendor/
 *.gem
 *.lock
+
+# Test generated files
+/test/tmp/
+/test/fixtures/**/*_original.json
+/test/fixtures/**/macros.h
+/test/fixtures/**/*.rb
