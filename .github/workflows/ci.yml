@@ -20,8 +20,8 @@ jobs:
           clang --version
           wget https://github.com/rpav/c2ffi/archive/refs/tags/v18.1.0.0.zip
           unzip v18.1.0.0.zip
-          cd c2ffi-18.1.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
+          cd c2ffi-18.1.0.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
       - name: Run tests
         run: bundle exec rake test
         env:
-          C2FFI: ${{ github.workspace }}/c2ffi-18.1.0/build/bin/c2ffi
+          C2FFI: ${{ github.workspace }}/c2ffi-18.1.0.0/build/bin/c2ffi
