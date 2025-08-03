@@ -16,12 +16,12 @@ jobs:
           bundler-cache: true
       - name: Build c2ffi
         run: |
-          sudo apt-get install -y clang-16 llvm-16-dev libclang-16-dev libcurl4-gnutls-dev libcairo2-dev
+          sudo apt-get install -y clang-17 llvm-17-dev libclang-17-dev libcurl4-gnutls-dev libcairo2-dev
           clang --version
-          wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-16.0.0.zip
-          unzip llvm-16.0.0.zip
-          cd c2ffi-llvm-16.0.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
+          wget https://github.com/rpav/c2ffi/archive/refs/heads/llvm-17.0.0.zip
+          unzip llvm-17.0.0.zip
+          cd c2ffi-llvm-17.0.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
       - name: Run tests
         run: bundle exec rake test
         env:
-          C2FFI: ${{ github.workspace }}/c2ffi-llvm-16.0.0/build/bin/c2ffi
+          C2FFI: ${{ github.workspace }}/c2ffi-llvm-17.0.0/build/bin/c2ffi
