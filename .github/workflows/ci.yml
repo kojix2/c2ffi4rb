@@ -23,18 +23,6 @@ jobs:
           wget https://github.com/rpav/c2ffi/archive/refs/tags/v18.1.0.0.zip
           unzip v18.1.0.0.zip
           cd c2ffi-18.1.0.0 && mkdir build && cd build && cmake .. && make -j$(nproc)
-      - name: Generate Cairo fixtures
-        run: |
-          export C2FFI=${{ github.workspace }}/c2ffi-18.1.0.0/build/bin/c2ffi
-          cd test/fixtures/cairo
-          # Generate Cairo JSON files using c2ffi
-          CAIRO_INCLUDE=$(pkg-config --cflags-only-I cairo | cut -d' ' -f1 | cut -c3-)
-          CAIRO_HEADER=$(find $CAIRO_INCLUDE -name "cairo.h" | head -1)
-          $C2FFI $CAIRO_HEADER --output cairo_original.json
-          $C2FFI macros.h --output macros_original.json
-          # Generate expected Ruby output
-          cd ../../..
-          ruby exe/c2ffi4rb test/fixtures/cairo/cairo_original.json test/fixtures/cairo/macros_original.json > test/fixtures/cairo/my_cairo.rb
       - name: Run tests
         run: bundle exec rake test
         env:

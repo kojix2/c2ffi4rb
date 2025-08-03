@@ -25,11 +25,11 @@ class CLITest < Minitest::Test
   def test_no_arguments_with_tty
     # When no arguments and stdin is a tty, should show help and exit with error
     # Skip this test in CI environments where TTY behavior is different
-    skip "TTY behavior test not reliable in CI environments" if ENV['CI']
-    
+    skip 'TTY behavior test not reliable in CI environments' if ENV['CI']
+
     output = `ruby #{@cli_path} 2>&1`
     assert_equal 1, $?.exitstatus
-    assert_includes output, "Usage: c2ffi4rb"
+    assert_includes output, 'Usage: c2ffi4rb'
   end
 
   def test_simple_json_processing
