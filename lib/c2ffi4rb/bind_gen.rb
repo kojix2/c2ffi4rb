@@ -65,8 +65,8 @@ module C2FFI4RB
               "Unknown form tag: '#{form[:tag]}'. Expected one of: typedef, const, extern, function, struct, union, enum"
       end
     rescue StandardError => e
-      warn "Error processing form #{form.inspect}: #{e.message}"
-      "# Error: #{e.message}"
+      warn "[c2ffi4rb] Error processing form #{form.inspect}: #{e.message}"
+      "# [c2ffi4rb] Error: #{e.message}"
     end
 
     # Validate form structure before processing
@@ -74,6 +74,31 @@ module C2FFI4RB
       raise ArgumentError, 'Form must be a Hash' unless form.is_a?(Hash)
       raise ArgumentError, 'Form must have a :tag key' unless form.key?(:tag)
       raise ArgumentError, 'Form :tag cannot be nil or empty' if form[:tag].nil? || form[:tag].empty?
+
+      # Additional validation based on form type
+      case form[:tag]
+      when 'typedef', 'const', 'extern'
+        raise ArgumentError, "Form '#{form[:tag]}' must have a :name key" unless form.key?(:name)
+        raise ArgumentError, "Form '#{form[:tag]}' :name cannot be empty" if form[:name].nil? || form[:name].empty?
+      when 'function'
+        raise ArgumentError, "Form 'function' must have a :name key" unless form.key?(:name)
+
+        unless form.key?(:parameters) && form[:parameters].is_a?(Array)
+          raise ArgumentError,
+                "Form 'function' must have :parameters array"
+        end
+      when 'struct', 'union'
+        unless form.key?(:fields) && form[:fields].is_a?(Array)
+          raise ArgumentError,
+                "Form '#{form[:tag]}' must have :fields array"
+        end
+      when 'enum'
+        unless form.key?(:fields) && form[:fields].is_a?(Array)
+          raise ArgumentError,
+                "Form 'enum' must have :fields array"
+        end
+        raise ArgumentError, "Form 'enum' must have :id" unless form.key?(:id)
+      end
     end
 
     # Generate typedef declaration, handling different typedef types
@@ -94,8 +119,8 @@ module C2FFI4RB
 
     # Handle self-referential typedef (ignore with warning)
     def handle_self_referential_typedef(name)
-      warn "Ignoring self-referential typedef #{name}"
-      "# Ignoring self-referential typedef #{name}"
+      warn "[c2ffi4rb] Ignoring self-referential typedef #{name}"
+      "# [c2ffi4rb] Ignoring self-referential typedef #{name}"
     end
 
     # Handle regular typedef declarations
@@ -103,9 +128,9 @@ module C2FFI4RB
       name = form[:name]
 
       if @typedefs.key?(name)
-        return "# typedef already defined? #{name}" if @typedefs[name] == type
+        return "# [c2ffi4rb] typedef already defined? #{name}" if @typedefs[name] == type
 
-        warn "# Redefinition of #{name} from #{@typedefs[name]} to #{type}"
+        warn "[c2ffi4rb] Redefinition of #{name} from #{@typedefs[name]} to #{type}"
       end
 
       @typedefs[name] = type
@@ -212,7 +237,11 @@ module C2FFI4RB
     # Create complete struct/union definition with fields
     def create_struct_definition(form)
       name = normalize_struct_name(form[:name])
-      return "# Already defined? #{name}" if @struct_type.include?(name)
+
+      if @struct_type.include?(name)
+        warn "[c2ffi4rb] Struct '#{name}' already defined, skipping redefinition"
+        return "# [c2ffi4rb] Already defined: #{name} (#{form[:tag]})"
+      end
 
       register_struct(name)
 
@@ -222,8 +251,8 @@ module C2FFI4RB
 
     # Build struct class definition with inheritance
     def build_struct_class_definition(form, name)
-      type = form[:tag] == 'struct' ? '::FFI::Struct' : '::FFI::Union'
-      lines = ["class #{name} < #{type}"]
+      base_class = form[:tag] == 'struct' ? '::FFI::Struct' : '::FFI::Union'
+      lines = ["class #{name} < #{base_class}"]
 
       lines.concat(build_struct_layout(form[:fields])) if form[:fields].any?
 
@@ -295,10 +324,19 @@ module C2FFI4RB
 
     # Resolve default/unknown types
     def resolve_default_type(form)
-      st_name = normalize_struct_name(form[:tag])
+      tag = form[:tag]
+
+      # Check if it's a known struct type
+      st_name = normalize_struct_name(tag)
       return st_name if @struct_type.include?(st_name)
 
-      form[:tag].start_with?(':') ? form[:tag] : ":#{form[:tag]}"
+      # Handle primitive types and unknown types
+      if tag.start_with?(':')
+        tag
+      else
+        warn "[c2ffi4rb] Unknown type '#{tag}', treating as primitive type"
+        ":#{tag}"
+      end
     end
   end
 end
