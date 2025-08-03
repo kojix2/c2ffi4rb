@@ -14,6 +14,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+      - name: Remove old LLVM
+        run: sudo apt-get purge -y llvm-16-dev clang-16 libclang-16-dev
       - name: Build c2ffi
         run: |
           sudo apt-get install -y clang-18 llvm-18-dev libclang-18-dev libcurl4-gnutls-dev libcairo2-dev
