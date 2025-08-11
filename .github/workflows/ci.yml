@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get purge -y llvm-16-dev clang-16 libclang-16-dev
       - name: Build c2ffi
         run: |
-          sudo apt-get install -y clang-18 llvm-18-dev libclang-18-dev libcurl4-gnutls-dev libcairo2-dev pkg-config
+          sudo apt-get install -y clang-18 llvm-18-dev libclang-18-dev libcurl4-gnutls-dev libcairo2-dev libedit-dev pkg-config
           clang --version
           wget https://github.com/rpav/c2ffi/archive/refs/tags/v18.1.0.0.zip
           unzip v18.1.0.0.zip
