@@ -17,7 +17,9 @@ module C2FFI4RB
       ':signed-long' => ':long',
       ':unsigned-long' => ':ulong',
       ':unsigned-long-long' => ':ulong_long',
-      ':function-pointer' => ':pointer'
+      ':function-pointer' => ':pointer',
+      ':function' => ':pointer',
+      ':_Bool' => ':bool'
     }
 
     # Class method to create instance and generate bindings

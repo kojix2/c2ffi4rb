@@ -151,6 +151,11 @@ module C2FFI4RB
       assert_equal '[:int, 5]', result
     end
 
+    def test_resolve_ffi_compatible_builtin_types
+      assert_equal ':bool', @parser.send(:resolve_type, { tag: ':_Bool' })
+      assert_equal ':pointer', @parser.send(:resolve_type, { tag: ':function' })
+    end
+
     def test_resolve_unknown_type
       form = { tag: ':unknown_type' }
       result = @parser.send(:resolve_type, form)
